@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "defaultTitle": "Rezervacija stolova",
+    "defaultDescription": "Odaberite stol na tlocrtu i rezervirajte.",
+    "venueDescription": "Rezervirajte stol u klubu {venue}."
+  },
+  "home": {
+    "title": "Rezervacija stolova",
+    "body": "Otvorite poveznicu koju ste dobili od kluba."
+  },
+  "venue": {
+    "logoAlt": "Logo kluba {venue}",
+    "eventLabel": "Termin",
+    "noEvents": "Trenutno nema dostupnih termina."
+  },
+  "floorplan": {
+    "floorsLabel": "Etaže",
+    "canvasLabel": "Tlocrt etaže {floor}",
+    "loading": "Učitavanje tlocrta…",
+    "zoomIn": "Približi",
+    "zoomOut": "Udalji",
+    "zoomReset": "Prikaži cijelu etažu",
+    "hint": "Povucite za pomicanje, raširite prste za zumiranje.",
+    "legendLabel": "Legenda",
+    "status": {
+      "free": "Slobodan",
+      "held": "Držan",
+      "booked": "Zauzet"
+    }
+  },
+  "notFound": {
+    "title": "Stranica nije pronađena",
+    "body": "Provjerite poveznicu koju ste dobili od kluba."
+  }
+}

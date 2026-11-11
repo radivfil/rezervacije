@@ -1,26 +1,28 @@
 @import "tailwindcss";
 
+/* Neutralne vrijednosti; svaki klub ih prepisuje u app/k/[slug]/layout.tsx. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-primary: #4b5563;
+  --brand-accent: #9ca3af;
+  --brand-background: #ffffff;
+  --brand-surface: #f3f4f6;
+  --brand-text: #111827;
+  --brand-on-primary: #ffffff;
+  --brand-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-background: var(--brand-background);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-text: var(--brand-text);
+  --color-brand-on-primary: var(--brand-on-primary);
+  --font-brand: var(--brand-font);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--brand-background);
+  color: var(--brand-text);
+  font-family: var(--brand-font);
 }

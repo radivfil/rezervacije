@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SUPPORTED_FONTS } from "../theme";
 
 /** Identifikator entiteta: mala slova, brojevi i crtice. */
 export const IdSchema = z
@@ -27,7 +28,7 @@ export const VenueThemeSchema = z.object({
     surface: HexColorSchema,
     text: HexColorSchema,
   }),
-  fontFamily: z.string().min(1),
+  fontFamily: z.enum(SUPPORTED_FONTS),
 });
 
 export const VenuePolicySchema = z.object({
