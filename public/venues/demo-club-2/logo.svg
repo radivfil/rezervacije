@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" role="img" aria-label="Lanterna Lounge">
+  <path d="M20 10 h20 l6 10 v26 l-6 6 h-20 l-6 -6 v-26 z" fill="#d97706"/>
+  <rect x="24" y="22" width="12" height="18" rx="3" fill="#fdf8f0"/>
+  <text x="58" y="39" font-family="'Playfair Display', Georgia, serif" font-size="22" font-style="italic" fill="#1c1917">Lanterna Lounge</text>
+</svg>
