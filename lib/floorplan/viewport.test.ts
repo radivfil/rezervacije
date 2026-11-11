@@ -10,6 +10,9 @@ import {
   scaleBounds,
   zoomAt,
   zoomWithin,
+  needsZoomBeforeSelect,
+  comfortableScale,
+  focusOn,
 } from "./viewport";
 
 const floor = { width: 1000, height: 700 };
@@ -66,5 +69,26 @@ describe("viewport", () => {
   it("distance i midpoint", () => {
     expect(distance({ x: 0, y: 0 }, { x: 3, y: 4 })).toBe(5);
     expect(midpoint({ x: 0, y: 0 }, { x: 4, y: 2 })).toEqual({ x: 2, y: 1 });
+  });
+});
+
+describe("dodir na mali stol", () => {
+  it("needsZoomBeforeSelect ispod 44 px", () => {
+    expect(needsZoomBeforeSelect(50, 0.36)).toBe(true);
+    expect(needsZoomBeforeSelect(44, 1)).toBe(false);
+  });
+
+  it("comfortableScale daje stol veći od 44 px", () => {
+    expect(44 * comfortableScale(44)).toBeGreaterThan(44);
+    expect(needsZoomBeforeSelect(50, comfortableScale(50))).toBe(false);
+  });
+
+  it("focusOn centrira točku i poštuje rubove", () => {
+    const centered = focusOn({ x: 500, y: 350 }, 1.2, phone, floor);
+    expect(centered.x + 500 * centered.scale).toBeCloseTo(phone.width / 2);
+    expect(centered.y + 350 * centered.scale).toBeCloseTo(phone.height / 2);
+    const corner = focusOn({ x: 0, y: 0 }, 1.2, phone, floor);
+    expect(corner.x).toBe(0);
+    expect(corner.y).toBe(0);
   });
 });

@@ -39,6 +39,7 @@ export async function listEvents(slug: string): Promise<Event[]> {
 
 export interface FloorplanData {
   venue: Venue;
+  events: Event[];
   floors: Floor[];
   zones: Zone[];
   tables: Table[];
@@ -49,24 +50,28 @@ export interface FloorplanData {
 
 /**
  * Tlocrt kluba sa statusima stolova za termin.
- * Bez eventId uzima se prvi termin na ili nakon `fromDate` (YYYY-MM-DD), inače prvi termin.
+ * Redoslijed odabira termina: `eventId`, termin na točno `date` (samo od `fromDate`),
+ * prvi termin na ili nakon `fromDate` (YYYY-MM-DD), inače prvi termin.
  */
 export async function getFloorplan(
   slug: string,
-  options: { eventId?: string; fromDate?: string } = {},
+  options: { eventId?: string; date?: string; fromDate?: string } = {},
 ): Promise<FloorplanData | null> {
   const data = loadVenues().get(slug);
   if (!data) return null;
   const events = await listEvents(slug);
-  const { eventId, fromDate } = options;
+  const { eventId, date, fromDate } = options;
+  const upcoming = fromDate ? events.filter((candidate) => candidate.date >= fromDate) : events;
   const event =
     (eventId ? events.find((candidate) => candidate.id === eventId) : undefined) ??
-    (fromDate ? events.find((candidate) => candidate.date >= fromDate) : undefined) ??
+    (date ? upcoming.find((candidate) => candidate.date === date) : undefined) ??
+    upcoming[0] ??
     events[0] ??
     null;
 
   return {
     venue: data.venue,
+    events: upcoming,
     floors: [...data.floors].sort((a, b) => a.order - b.order),
     zones: data.zones,
     tables: data.tables,

@@ -11,7 +11,9 @@
   "venue": {
     "logoAlt": "Logo kluba {venue}",
     "eventLabel": "Termin",
-    "noEvents": "Trenutno nema dostupnih termina."
+    "noEvents": "Trenutno nema dostupnih termina.",
+    "dateLabel": "Odaberite datum",
+    "specialBadge": "Event"
   },
   "floorplan": {
     "floorsLabel": "Etaže",
@@ -26,10 +28,27 @@
       "free": "Slobodan",
       "held": "Držan",
       "booked": "Zauzet"
-    }
+    },
+    "tableLabel": "Stol {label}"
   },
   "notFound": {
     "title": "Stranica nije pronađena",
     "body": "Provjerite poveznicu koju ste dobili od kluba."
+  },
+  "tableSheet": {
+    "title": "Stol {label}",
+    "close": "Zatvori",
+    "zone": "Zona",
+    "floor": "Etaža",
+    "capacity": "Kapacitet",
+    "capacityValue": "do {count} osoba",
+    "status": "Status",
+    "minSpend": "Minimalna potrošnja",
+    "deposit": "Akontacija ({percent} %)",
+    "multiplier": "Cijena termina {multiplier}",
+    "termsTitle": "Uvjeti",
+    "termsDeposit": "Rezervacija je potvrđena tek nakon uplate akontacije od {percent} % minimalne potrošnje.",
+    "termsCancellation": "Besplatno otkazivanje moguće je najkasnije {hours} h prije početka termina.",
+    "noPrice": "Za ovaj datum nema termina."
   }
 }

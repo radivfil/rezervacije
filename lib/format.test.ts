@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { formatEur, formatEventDate, isoDateInTimeZone } from "./format";
+import {
+  formatEur,
+  formatEventDate,
+  formatMultiplier,
+  formatShortDate,
+  formatShortWeekday,
+  isoDateInTimeZone,
+} from "./format";
 import { interpolate, messages } from "./i18n";
 
 const normalize = (value: string): string => value.replace(/\s/g, " ");
@@ -16,6 +23,18 @@ describe("format (hr-HR)", () => {
   it("formatira EUR iz centi", () => {
     expect(normalize(formatEur(104000))).toBe("1.040,00 €");
     expect(normalize(formatEur(5850))).toBe("58,50 €");
+  });
+});
+
+describe("kratki formati", () => {
+  it("dan i datum", () => {
+    expect(formatShortWeekday("2026-11-12")).toBe("čet");
+    expect(normalize(formatShortDate("2026-11-12"))).toBe("12. 11.");
+  });
+
+  it("množitelj s decimalnim zarezom", () => {
+    expect(formatMultiplier(1.3)).toBe("×1,3");
+    expect(formatMultiplier(1)).toBe("×1");
   });
 });
 

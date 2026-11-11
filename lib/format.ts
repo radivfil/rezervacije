@@ -33,3 +33,28 @@ export function isoDateInTimeZone(date: Date, timeZone: string): string {
   const get = (type: Intl.DateTimeFormatPartTypes): string => parts.find((part) => part.type === type)?.value ?? "";
   return `${get("year")}-${get("month")}-${get("day")}`;
 }
+
+const shortWeekdayFormatter = new Intl.DateTimeFormat(LOCALE, { weekday: "short", timeZone: "UTC" });
+const shortDateFormatter = new Intl.DateTimeFormat(LOCALE, { day: "numeric", month: "numeric", timeZone: "UTC" });
+const multiplierFormatter = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 2 });
+
+function parseIsoDate(isoDate: string): Date {
+  const time = Date.parse(`${isoDate}T00:00:00Z`);
+  if (Number.isNaN(time)) throw new Error(`Neispravan datum: ${isoDate}`);
+  return new Date(time);
+}
+
+/** Kratki dan u tjednu, npr. "čet". */
+export function formatShortWeekday(isoDate: string): string {
+  return shortWeekdayFormatter.format(parseIsoDate(isoDate)).replace(/\.$/, "");
+}
+
+/** Kratki datum, npr. "12. 11." */
+export function formatShortDate(isoDate: string): string {
+  return shortDateFormatter.format(parseIsoDate(isoDate));
+}
+
+/** Množitelj cijene, npr. "×1,3". */
+export function formatMultiplier(multiplier: number): string {
+  return `×${multiplierFormatter.format(multiplier)}`;
+}

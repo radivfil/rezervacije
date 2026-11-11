@@ -41,4 +41,34 @@ describe("venue service", () => {
     });
     expect(mixed).toBe(true);
   });
+
+  it("bira termin po točnom datumu, a nepoznat datum pada na prvi od fromDate", async () => {
+    const events = await listEvents("demo-club");
+    const fifth = events[4];
+    expect((await getFloorplan("demo-club", { date: fifth?.date }))?.event?.id).toBe(fifth?.id);
+    const fallback = await getFloorplan("demo-club", { date: "2026-11-16", fromDate: events[1]?.date });
+    expect(fallback?.event?.id).toBe(events[1]?.id);
+  });
+
+  it("ne vraća prošli termin zadan preko date", async () => {
+    const events = await listEvents("demo-club");
+    const plan = await getFloorplan("demo-club", { date: events[0]?.date, fromDate: events[2]?.date });
+    expect(plan?.event?.id).toBe(events[2]?.id);
+  });
+
+  it("vraća samo termine od fromDate", async () => {
+    const events = await listEvents("demo-club");
+    const plan = await getFloorplan("demo-club", { fromDate: events[3]?.date });
+    expect(plan?.events[0]?.id).toBe(events[3]?.id);
+    expect(plan?.events).toHaveLength(events.length - 3);
+  });
+
+  it("promjena datuma mijenja množitelj i statuse stolova", async () => {
+    const events = await listEvents("demo-club");
+    const plans = await Promise.all(events.map((event) => getFloorplan("demo-club", { date: event.date })));
+    const multipliers = new Set(plans.map((plan) => plan?.event?.priceMultiplier));
+    expect(multipliers).toEqual(new Set([0.6, 1, 1.3, 1.5]));
+    const signatures = new Set(plans.map((plan) => JSON.stringify(plan?.availability)));
+    expect(signatures.size).toBeGreaterThan(1);
+  });
 });

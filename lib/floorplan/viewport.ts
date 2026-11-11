@@ -100,3 +100,28 @@ export function midpoint(a: Point, b: Point): Point {
 export function hitSize(size: number, scale: number): number {
   return Math.max(size, MIN_TOUCH_TARGET_PX / scale);
 }
+
+/** Je li stol na ekranu premalen za pouzdan dodir (pa ga prvo treba približiti). */
+export function needsZoomBeforeSelect(minSide: number, scale: number): boolean {
+  return minSide * scale < MIN_TOUCH_TARGET_PX;
+}
+
+/** Mjerilo pri kojem je najmanja stranica stola udobna za dodir. */
+export function comfortableScale(minSide: number): number {
+  return (MIN_TOUCH_TARGET_PX * 1.25) / minSide;
+}
+
+/** Viewport centriran na točku tlocrta, uz ograničenja mjerila i rubova. */
+export function focusOn(world: Point, scale: number, container: Size, floor: Size): Viewport {
+  const { min, max } = scaleBounds(container, floor);
+  const nextScale = clamp(scale, min, max);
+  return constrainViewport(
+    {
+      scale: nextScale,
+      x: container.width / 2 - world.x * nextScale,
+      y: container.height / 2 - world.y * nextScale,
+    },
+    container,
+    floor,
+  );
+}

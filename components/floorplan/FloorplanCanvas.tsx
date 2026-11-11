@@ -8,9 +8,13 @@ import type { Decoration, Floor, Table, VenueTheme, Zone } from "@/lib/domain/ty
 import type { TableAvailability } from "@/lib/domain/table-status";
 import { AVAILABILITY_COLORS } from "@/lib/floorplan/colors";
 import {
+  comfortableScale,
   constrainViewport,
   distance,
   fitViewport,
+  focusOn,
+  hitSize,
+  needsZoomBeforeSelect,
   midpoint,
   ZOOM_STEP,
   zoomWithin,
@@ -31,6 +35,9 @@ export interface FloorplanCanvasProps {
   zoneColors: Readonly<Record<string, Zone["color"]>>;
   availability: Readonly<Record<string, TableAvailability>>;
   theme: VenueTheme;
+  selectedTableId: string | null;
+  onSelectTable: (tableId: string) => void;
+  onClearSelection: () => void;
 }
 
 const WHEEL_STEP = 1.1;
@@ -65,6 +72,9 @@ export default function FloorplanCanvas({
   zoneColors,
   availability,
   theme,
+  selectedTableId,
+  onSelectTable,
+  onClearSelection,
 }: FloorplanCanvasProps) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const size = useElementSize(container);
@@ -93,6 +103,19 @@ export default function FloorplanCanvas({
     if (!size || !current) return;
     const point = anchor ?? { x: size.width / 2, y: size.height / 2 };
     commit(zoomWithin(current, point, current.scale * factor, size, floorSize));
+  };
+
+  /** Premalen stol se prvo približi, a tek sljedeći dodir ga odabire. */
+  const handleTableTap = (table: Table): void => {
+    const current = currentViewport();
+    if (!size || !current) return;
+    const minSide = Math.min(table.width, table.height);
+    if (needsZoomBeforeSelect(minSide, current.scale)) {
+      const center = { x: table.x + table.width / 2, y: table.y + table.height / 2 };
+      commit(focusOn(center, comfortableScale(minSide), size, floorSize));
+      return;
+    }
+    onSelectTable(table.id);
   };
 
   const handleWheel = (event: KonvaEventObject<WheelEvent>): void => {
@@ -159,6 +182,13 @@ export default function FloorplanCanvas({
           x={viewport.x}
           y={viewport.y}
           draggable
+          dragDistance={6}
+          onClick={(event) => {
+            if (event.target === stageRef.current) onClearSelection();
+          }}
+          onTap={(event) => {
+            if (event.target === stageRef.current) onClearSelection();
+          }}
           dragBoundFunc={(position) => {
             const scale = stageRef.current?.scaleX() ?? viewport.scale;
             const bounded = constrainViewport({ scale, ...position }, size, floorSize);
@@ -181,6 +211,7 @@ export default function FloorplanCanvas({
               opacity={0.9}
               strokeScaleEnabled={false}
               cornerRadius={12}
+              listening={false}
             />
             {decorations.map((decoration) => (
               <DecorationNode
@@ -200,6 +231,10 @@ export default function FloorplanCanvas({
                   fill={fill}
                   stroke={zoneColors[table.zoneId] ?? theme.colors.text}
                   textColor={readableTextOn(fill)}
+                  selected={table.id === selectedTableId}
+                  selectionColor={theme.colors.primary}
+                  hitSize={hitSize(Math.min(table.width, table.height), viewport.scale)}
+                  onTap={() => handleTableTap(table)}
                 />
               );
             })}
