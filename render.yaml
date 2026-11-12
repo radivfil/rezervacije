@@ -1,0 +1,15 @@
+# Render Blueprint: jedan web servis (rezervacije su u memoriji, pa mora biti jedna instanca).
+services:
+  - type: web
+    name: rezervacije-demo
+    runtime: node
+    plan: free
+    branch: ccr-faa7c4c9-d4t4yp
+    buildCommand: npm ci && npm run seed && npm run build
+    startCommand: npm start
+    healthCheckPath: /k/demo-club
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ADMIN_SESSION_SECRET
+        generateValue: true
