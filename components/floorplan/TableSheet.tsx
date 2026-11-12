@@ -87,6 +87,7 @@ export function TableSheet({ details, onClose }: TableSheetProps) {
             <Row label={interpolate(t.deposit, { percent: price.depositPercent })}>
               <span className="text-lg text-brand-primary">{formatEur(price.depositCents)}</span>
             </Row>
+            <Row label={t.remaining}>{formatEur(price.remainingCents)}</Row>
             <p className="py-1 text-xs opacity-60">
               {interpolate(t.multiplier, { multiplier: formatMultiplier(price.multiplier) })}
             </p>
@@ -99,7 +100,12 @@ export function TableSheet({ details, onClose }: TableSheetProps) {
       <div className="mt-3 rounded-xl bg-brand-background/50 p-3 text-sm">
         <h3 className="mb-1 font-semibold">{t.termsTitle}</h3>
         <ul className="list-disc space-y-1 pl-5 opacity-90">
-          {price ? <li>{interpolate(t.termsDeposit, { percent: price.depositPercent })}</li> : null}
+          {price ? (
+            <>
+              <li>{interpolate(t.termsDeposit, { percent: price.depositPercent })}</li>
+              <li>{t.termsDepositCounts}</li>
+            </>
+          ) : null}
           <li>{interpolate(t.termsCancellation, { hours: details.freeCancellationHours })}</li>
         </ul>
       </div>

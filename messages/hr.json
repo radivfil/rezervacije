@@ -45,9 +45,11 @@
     "status": "Status",
     "minSpend": "Minimalna potrošnja",
     "deposit": "Akontacija ({percent} %)",
+    "remaining": "Ostatak potrošnje u klubu",
     "multiplier": "Cijena termina {multiplier}",
     "termsTitle": "Uvjeti",
     "termsDeposit": "Rezervacija je potvrđena tek nakon uplate akontacije od {percent} % minimalne potrošnje.",
+    "termsDepositCounts": "Akontacija se uračunava u minimalnu potrošnju.",
     "termsCancellation": "Besplatno otkazivanje moguće je najkasnije {hours} h prije početka termina.",
     "noPrice": "Za ovaj datum nema termina."
   }

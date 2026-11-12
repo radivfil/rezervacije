@@ -41,6 +41,7 @@ describe("calculateTablePrice", () => {
     expect(calculateTablePrice(standard, { priceMultiplier: PRICE_MULTIPLIERS.friday })).toEqual({
       minSpendCents: 15000,
       depositCents: 4500,
+      remainingCents: 10500,
       depositPercent: 30,
       multiplier: 1,
     });
@@ -74,6 +75,15 @@ describe("calculateTablePrice", () => {
     const price = calculateTablePrice({ minSpend, depositPercent: 30 }, { priceMultiplier: multiplier });
     expect(price.minSpendCents).toBe(cents);
     expect(price.depositCents).toBe(deposit);
+  });
+
+  it("akontacija se uračunava: akontacija + ostatak = min. potrošnja", () => {
+    for (const multiplier of [0.6, 1, 1.3, 1.5]) {
+      for (const minSpend of [150, 250, 300, 500, 800, 1000, 1]) {
+        const price = calculateTablePrice({ minSpend, depositPercent: 33 }, { priceMultiplier: multiplier });
+        expect(price.depositCents + price.remainingCents).toBe(price.minSpendCents);
+      }
+    }
   });
 
   it("zaokružuje akontaciju na cent", () => {

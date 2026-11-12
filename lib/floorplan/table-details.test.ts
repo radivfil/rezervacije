@@ -32,7 +32,7 @@ describe("buildTableDetails", () => {
     const thursday = buildTableDetails({ ...base, event: { priceMultiplier: 0.6 } });
     const saturday = buildTableDetails({ ...base, event: { priceMultiplier: 1.3 } });
     expect(thursday.price).toMatchObject({ minSpendCents: 48000, depositCents: 14400, depositPercent: 30 });
-    expect(saturday.price).toMatchObject({ minSpendCents: 104000, depositCents: 31200 });
+    expect(saturday.price).toMatchObject({ minSpendCents: 104000, depositCents: 31200, remainingCents: 72800 });
   });
 
   it("bez termina nema cijene, a nepoznati stol je slobodan", () => {

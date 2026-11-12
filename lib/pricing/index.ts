@@ -36,6 +36,8 @@ export interface TablePrice {
   minSpendCents: number;
   /** Akontacija, u centima. */
   depositCents: number;
+  /** Ostatak min. potrošnje koji se troši u klubu (akontacija se uračunava), u centima. */
+  remainingCents: number;
   depositPercent: number;
   multiplier: number;
 }
@@ -43,6 +45,7 @@ export interface TablePrice {
 /**
  * cijena = zona.minSpend x event.priceMultiplier
  * akontacija = cijena x depositPercent
+ * ostatak u klubu = cijena - akontacija (akontacija se uračunava u min. potrošnju)
  * Iznosi su u centima (cijeli brojevi), zaokruženi na najbliži cent.
  */
 export function calculateTablePrice(
@@ -58,6 +61,7 @@ export function calculateTablePrice(
   return {
     minSpendCents,
     depositCents,
+    remainingCents: minSpendCents - depositCents,
     depositPercent: zone.depositPercent,
     multiplier: event.priceMultiplier,
   };
