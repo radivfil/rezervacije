@@ -173,7 +173,9 @@
         "noShow": "Označeno kao no-show.",
         "cancel": "Rezervacija je otkazana."
       },
-      "none": "Za ovu rezervaciju trenutno nema dostupnih akcija."
+      "none": "Za ovu rezervaciju trenutno nema dostupnih akcija.",
+      "confirmCancelYes": "Da, otkaži",
+      "confirmCancelNo": "Ne"
     },
     "actionErrors": {
       "not_found": "Rezervacija nije pronađena.",
