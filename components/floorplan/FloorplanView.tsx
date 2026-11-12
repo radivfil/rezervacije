@@ -1,29 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useTransition } from "react";
-import dynamic from "next/dynamic";
-import { usePathname, useRouter } from "next/navigation";
-import type { Decoration, Event, Floor, Table, Venue, Zone } from "@/lib/domain/types";
+import type { Decoration, Event, Floor, PublicVenue, Table, Zone } from "@/lib/domain/types";
 import type { TableAvailability } from "@/lib/domain/table-status";
-import { useFloorplanStore, floorplanStore } from "@/lib/floorplan/store";
-import { bookingHref, venueDateHref } from "@/lib/routes";
 import { buildTableDetails } from "@/lib/floorplan/table-details";
-import { messages } from "@/lib/i18n";
-import { DatePicker } from "../venue/DatePicker";
-import { EventSummary } from "../venue/EventSummary";
-import { FloorplanSkeleton } from "./FloorplanSkeleton";
-import { FloorTabs } from "./FloorTabs";
-import { StatusLegend } from "./StatusLegend";
+import { bookingHref } from "@/lib/routes";
+import { FloorplanBoard } from "./FloorplanBoard";
 import { TableSheet } from "./TableSheet";
 
-/** Konva radi samo u pregledniku. */
-const FloorplanCanvas = dynamic(() => import("./FloorplanCanvas"), {
-  ssr: false,
-  loading: () => <FloorplanSkeleton />,
-});
-
 interface FloorplanViewProps {
-  venue: Pick<Venue, "slug" | "theme" | "policy">;
+  venue: Pick<PublicVenue, "slug" | "theme" | "policy">;
   bookingOpen: boolean;
   events: readonly Event[];
   event: Event | null;
@@ -34,66 +19,25 @@ interface FloorplanViewProps {
   availability: Readonly<Record<string, TableAvailability>>;
 }
 
-export function FloorplanView({
-  venue,
-  bookingOpen,
-  events,
-  event,
-  floors,
-  zones,
-  tables,
-  decorations,
-  availability,
-}: FloorplanViewProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
-  const activeFloorId = useFloorplanStore((state) => state.activeFloorId);
-  const selectedTableId = useFloorplanStore((state) => state.selectedTableId);
-  const { setFloor, selectTable, clearSelection } = floorplanStore.getState();
-
-  // Odabir se ne prenosi na drugi klub ili sljedeći posjet.
-  useEffect(() => () => floorplanStore.getState().reset(), []);
-
-  const floor = floors.find((candidate) => candidate.id === activeFloorId) ?? floors[0];
-  const zoneColors = useMemo(() => Object.fromEntries(zones.map((zone) => [zone.id, zone.color])), [zones]);
-  const selectedTable = tables.find((table) => table.id === selectedTableId) ?? null;
-  const details = selectedTable
-    ? buildTableDetails({ table: selectedTable, zones, floors, event, availability, policy: venue.policy, bookingOpen })
-    : null;
-  const bookHref = details?.canBook && event ? bookingHref(venue.slug, details.tableId, event.date) : null;
-
-  const selectDate = (date: string): void => {
-    startTransition(() => {
-      router.replace(venueDateHref(pathname, date), { scroll: false });
-    });
-  };
-
-  const close = useCallback(() => clearSelection(), [clearSelection]);
-
-  if (!floor) return null;
-
+/** Tlocrt za gosta. */
+export function FloorplanView({ venue, bookingOpen, ...board }: FloorplanViewProps) {
   return (
-    <section className={`flex flex-col gap-3 ${details ? "pb-[50dvh]" : ""}`}>
-      <DatePicker events={events} selectedDate={event?.date ?? null} onSelect={selectDate} />
-      <EventSummary event={event} />
-      <FloorTabs floors={floors} activeFloorId={floor.id} onSelect={setFloor} />
-      <div aria-busy={isPending} className={`transition-opacity ${isPending ? "opacity-60" : ""}`}>
-        <FloorplanCanvas
-          floor={floor}
-          tables={tables.filter((table) => table.floorId === floor.id)}
-          decorations={decorations.filter((decoration) => decoration.floorId === floor.id)}
-          zoneColors={zoneColors}
-          availability={availability}
-          theme={venue.theme}
-          selectedTableId={selectedTableId}
-          onSelectTable={selectTable}
-          onClearSelection={clearSelection}
-        />
-      </div>
-      <StatusLegend />
-      <p className="text-xs opacity-60">{messages.floorplan.hint}</p>
-      {details ? <TableSheet details={details} bookHref={bookHref} onClose={close} /> : null}
-    </section>
+    <FloorplanBoard
+      {...board}
+      theme={venue.theme}
+      renderSheet={(table, close) => {
+        const details = buildTableDetails({
+          table,
+          zones: board.zones,
+          floors: board.floors,
+          event: board.event,
+          availability: board.availability,
+          policy: venue.policy,
+          bookingOpen,
+        });
+        const bookHref = details.canBook && board.event ? bookingHref(venue.slug, table.id, board.event.date) : null;
+        return <TableSheet details={details} bookHref={bookHref} onClose={close} />;
+      }}
+    />
   );
 }

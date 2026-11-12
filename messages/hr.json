@@ -116,5 +116,88 @@
     "cancelledTitle": "Rezervacija je otkazana",
     "cancelledBody": "Ova rezervacija više nije aktivna.",
     "backToFloorplan": "Natrag na tlocrt"
+  },
+  "admin": {
+    "metaTitle": "Osoblje",
+    "loginTitle": "Prijava osoblja",
+    "loginBody": "Upišite PIN kluba.",
+    "pin": "PIN",
+    "login": "Prijava",
+    "loggingIn": "Prijava…",
+    "logout": "Odjava",
+    "errors": {
+      "wrong_pin": "Pogrešan PIN.",
+      "blocked": "Previše pogrešnih pokušaja. Pokušajte ponovno za {minutes} min.",
+      "not_found": "Klub nije pronađen."
+    },
+    "title": "Rezervacije",
+    "counts": {
+      "reserved": "Rezervirano",
+      "arrived": "Stiglo",
+      "expected": "Čeka se",
+      "held": "Drži se",
+      "noShow": "No-show"
+    },
+    "codeLabel": "Kod rezervacije",
+    "codePlaceholder": "npr. ABCD 2345",
+    "codeSubmit": "Otvori",
+    "codeNotFound": "Rezervacija s tim kodom nije pronađena.",
+    "listTitle": "Popis za termin",
+    "listEmpty": "Za ovaj termin nema rezervacija.",
+    "noEvent": "Nema termina za odabrani datum.",
+    "open": "Otvori",
+    "call": "Nazovi",
+    "status": {
+      "held": "Drži se",
+      "paid": "Plaćeno",
+      "confirmed": "Potvrđeno",
+      "checked_in": "Stigao",
+      "no_show": "No-show",
+      "cancelled": "Otkazano"
+    },
+    "source": {
+      "guest": "Online",
+      "staff": "Osoblje",
+      "seed": "Demo"
+    },
+    "staffBarTitle": "Osoblje",
+    "checkedInAt": "Stigao u {time}",
+    "actions": {
+      "checkIn": "Označi dolazak",
+      "noShow": "No-show",
+      "cancel": "Otkaži rezervaciju",
+      "confirmCancel": "Sigurno otkazati rezervaciju?",
+      "working": "Spremam…",
+      "done": {
+        "checkIn": "Dolazak je označen.",
+        "noShow": "Označeno kao no-show.",
+        "cancel": "Rezervacija je otkazana."
+      },
+      "none": "Za ovu rezervaciju trenutno nema dostupnih akcija."
+    },
+    "actionErrors": {
+      "not_found": "Rezervacija nije pronađena.",
+      "already_checked_in": "Gost je već označen kao stigao.",
+      "not_confirmed": "Rezervacija nije plaćena ni potvrđena.",
+      "outside_window": "Dolazak se može označiti od 3 h prije do 8 h nakon početka termina.",
+      "too_early": "No-show se može označiti tek nakon početka termina.",
+      "not_cancellable": "Ova rezervacija se više ne može otkazati.",
+      "unauthorized": "Sesija je istekla. Prijavite se ponovno."
+    },
+    "manual": {
+      "title": "Ručna rezervacija",
+      "kindLabel": "Vrsta",
+      "kindConfirmed": "Potvrđena",
+      "kindConfirmedHint": "Akontacija {amount} primljena izvan aplikacije.",
+      "kindHold": "Držanje do početka",
+      "kindHoldHint": "Za VIP goste i promotore, bez akontacije.",
+      "guestPhoneOptional": "Broj mobitela (neobavezno)",
+      "submit": "Spremi rezervaciju",
+      "created": "Rezervacija {code} je spremljena.",
+      "closed": "Za ovaj termin više se ne mogu dodavati rezervacije.",
+      "errors": {
+        "kind": "Odaberite vrstu rezervacije."
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { absoluteUrl, bookingHref, DATE_PARAM, reservationHref, venueDateHref, venueHref } from "./routes";
+import { absoluteUrl, adminHref, bookingHref, DATE_PARAM, reservationHref, venueDateHref, venueHref } from "./routes";
 
 const headers = (values: Record<string, string>) => ({ get: (name: string) => values[name] ?? null });
 
@@ -15,6 +15,7 @@ describe("rute", () => {
       "/k/demo-club/rezerviraj?stol=demo-club-vip-01&datum=2026-11-14",
     );
     expect(reservationHref("demo-club", "ABCD2345")).toBe("/k/demo-club/r/ABCD2345");
+    expect(adminHref("demo-club")).toBe("/k/demo-club/admin");
   });
 
   it("apsolutni URL iz zaglavlja", () => {

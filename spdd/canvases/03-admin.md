@@ -1,7 +1,7 @@
 # Canvas 03: Pregled rezervacija i check-in za osoblje kluba
 
 Izvor: spdd/stories/03-admin.md, spdd/analysis/03-admin.md (prijedlozi 1-8), canvas 01 i 02.
-Status: ceka pregled.
+Status: implementirano (Operations 1-7), 2026-11-12.
 
 ## R - Requirements
 Osoblje se na /k/<slug>/admin prijavi PIN-om kluba i za odabrani termin vidi tlocrt i popis rezervacija. Gost na ulazu pokazuje QR; osoblje ga skenira kamerom mobitela i na stranici potvrde oznaci dolazak. Osoblje rucno dodaje rezervacije, otkazuje ih i oznacava no-show.
@@ -59,7 +59,12 @@ Kao canvas 01/02. Dodatno: admin je tablet-first, ali radi na mobitelu; dodirne 
 - Nista izvan Operations 1-7.
 
 ## Odluke za pregled
-- [ ] QR se skenira kamerom mobitela (bez skenera u aplikaciji).
-- [ ] Check-in od 3 h prije do 8 h nakon pocetka; no-show tek nakon pocetka.
-- [ ] Rucna rezervacija: "potvrdena, akontacija primljena izvan aplikacije" ili "drzanje do pocetka termina".
-- [ ] Demo PIN-ovi 1234 / 4321.
+- [x] QR se skenira kamerom mobitela (bez skenera u aplikaciji).
+- [x] Check-in od 3 h prije do 8 h nakon pocetka; no-show tek nakon pocetka.
+- [x] Rucna rezervacija: "potvrdena, akontacija primljena izvan aplikacije" ili "drzanje do pocetka termina".
+- [x] Demo PIN-ovi 1234 / 4321.
+
+## Napomene iz implementacije
+- Bez ADMIN_SESSION_SECRET generira se nasumicna tajna po procesu (sesije vrijede do restarta, kao i podaci u memoriji) - umjesto zadane razvojne vrijednosti.
+- Kolacic osoblja je Secure u produkciji; ADMIN_COOKIE_INSECURE=1 dopusta lokalni demo preko http.
+- Klub koji se salje u preglednik nikad ne sadrzi adminPinHash (javni oblik kluba u servisnom sloju).

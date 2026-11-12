@@ -4,6 +4,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
+import { StaffBar } from "@/components/admin/StaffBar";
 import { DemoPaymentForm } from "@/components/reservation/DemoPaymentForm";
 import { DetailRows, type DetailRow } from "@/components/reservation/DetailRows";
 import { HoldCountdown } from "@/components/reservation/HoldCountdown";
@@ -17,6 +18,7 @@ import { remainingCents } from "@/lib/reservations/rules";
 import { absoluteUrl, reservationHref, venueDateHref, venueHref } from "@/lib/routes";
 import { getReservation, type ReservationView } from "@/lib/services/reservations";
 import { abandonReservationAction, payReservationAction } from "../../actions";
+import { hasStaffSession } from "../../admin/session";
 
 export const metadata: Metadata = { title: messages.reservation.metaTitle, robots: { index: false, follow: false } };
 
@@ -40,6 +42,16 @@ async function ReservationContent({ params }: { params: Promise<{ slug: string; 
   const view = await getReservation(slug, parsedCode.data);
   if (!view) notFound();
 
+  const staff = await hasStaffSession(slug);
+  return (
+    <>
+      {staff ? <StaffBar slug={slug} view={view} /> : null}
+      {await guestContent(view, slug)}
+    </>
+  );
+}
+
+async function guestContent(view: ReservationView, slug: string) {
   const backHref = venueDateHref(venueHref(slug), view.event.date);
   const { reservation } = view;
 
@@ -123,6 +135,11 @@ function ConfirmedReservation({ view, qr, backHref }: { view: ReservationView; q
         />
         <p className="text-xs uppercase tracking-wide opacity-70">{t.code}</p>
         <p className="font-mono text-3xl font-bold tracking-widest">{formatReservationCode(reservation.code)}</p>
+        {reservation.checkedInAt ? (
+          <p className="rounded-full bg-green-500/20 px-3 py-1 text-sm font-semibold">
+            {interpolate(messages.admin.checkedInAt, { time: formatTime(reservation.checkedInAt, venue.timezone) })}
+          </p>
+        ) : null}
       </section>
       <section className="rounded-2xl bg-brand-surface px-4 py-2">
         <DetailRows

@@ -15,6 +15,10 @@ export function bookingHref(slug: string, tableId: string, date: string): string
   return `${venueHref(slug)}/rezerviraj?${new URLSearchParams({ [TABLE_PARAM]: tableId, [DATE_PARAM]: date }).toString()}`;
 }
 
+export function adminHref(slug: string): string {
+  return `${venueHref(slug)}/admin`;
+}
+
 export function reservationHref(slug: string, code: string): string {
   return `${venueHref(slug)}/r/${encodeURIComponent(code)}`;
 }
