@@ -18,7 +18,8 @@
       "fontFamily": "Playfair Display"
     },
     "policy": {
-      "freeCancellationHours": 24
+      "freeCancellationHours": 24,
+      "holdMinutes": 10
     }
   },
   "floors": [
@@ -1474,7 +1475,8 @@
       "date": "2026-11-12",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-11-12T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-13",
@@ -1482,7 +1484,8 @@
       "date": "2026-11-13",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-11-13T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-14",
@@ -1490,7 +1493,8 @@
       "date": "2026-11-14",
       "name": "Subota",
       "kind": "regular",
-      "priceMultiplier": 1.3
+      "priceMultiplier": 1.3,
+      "startsAt": "2026-11-14T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-19",
@@ -1498,7 +1502,8 @@
       "date": "2026-11-19",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-11-19T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-20",
@@ -1506,7 +1511,8 @@
       "date": "2026-11-20",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-11-20T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-21",
@@ -1514,7 +1520,8 @@
       "date": "2026-11-21",
       "name": "Subota",
       "kind": "regular",
-      "priceMultiplier": 1.3
+      "priceMultiplier": 1.3,
+      "startsAt": "2026-11-21T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-26",
@@ -1522,7 +1529,8 @@
       "date": "2026-11-26",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-11-26T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-27",
@@ -1530,7 +1538,8 @@
       "date": "2026-11-27",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-11-27T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-11-28",
@@ -1538,7 +1547,8 @@
       "date": "2026-11-28",
       "name": "Glow Night",
       "kind": "special",
-      "priceMultiplier": 1.5
+      "priceMultiplier": 1.5,
+      "startsAt": "2026-11-28T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-03",
@@ -1546,7 +1556,8 @@
       "date": "2026-12-03",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-12-03T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-04",
@@ -1554,7 +1565,8 @@
       "date": "2026-12-04",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-12-04T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-05",
@@ -1562,7 +1574,8 @@
       "date": "2026-12-05",
       "name": "Subota",
       "kind": "regular",
-      "priceMultiplier": 1.3
+      "priceMultiplier": 1.3,
+      "startsAt": "2026-12-05T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-10",
@@ -1570,7 +1583,8 @@
       "date": "2026-12-10",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-12-10T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-11",
@@ -1578,7 +1592,8 @@
       "date": "2026-12-11",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-12-11T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-12",
@@ -1586,7 +1601,8 @@
       "date": "2026-12-12",
       "name": "Subota",
       "kind": "regular",
-      "priceMultiplier": 1.3
+      "priceMultiplier": 1.3,
+      "startsAt": "2026-12-12T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-17",
@@ -1594,7 +1610,8 @@
       "date": "2026-12-17",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-12-17T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-18",
@@ -1602,7 +1619,8 @@
       "date": "2026-12-18",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-12-18T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-19",
@@ -1610,7 +1628,8 @@
       "date": "2026-12-19",
       "name": "Retro Party",
       "kind": "special",
-      "priceMultiplier": 1.5
+      "priceMultiplier": 1.5,
+      "startsAt": "2026-12-19T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-24",
@@ -1618,7 +1637,8 @@
       "date": "2026-12-24",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-12-24T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-25",
@@ -1626,7 +1646,8 @@
       "date": "2026-12-25",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2026-12-25T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-26",
@@ -1634,7 +1655,8 @@
       "date": "2026-12-26",
       "name": "Subota",
       "kind": "regular",
-      "priceMultiplier": 1.3
+      "priceMultiplier": 1.3,
+      "startsAt": "2026-12-26T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2026-12-31",
@@ -1642,7 +1664,8 @@
       "date": "2026-12-31",
       "name": "Četvrtak",
       "kind": "regular",
-      "priceMultiplier": 0.6
+      "priceMultiplier": 0.6,
+      "startsAt": "2026-12-31T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2027-01-01",
@@ -1650,7 +1673,8 @@
       "date": "2027-01-01",
       "name": "Petak",
       "kind": "regular",
-      "priceMultiplier": 1
+      "priceMultiplier": 1,
+      "startsAt": "2027-01-01T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-ev-2027-01-02",
@@ -1658,7 +1682,8 @@
       "date": "2027-01-02",
       "name": "Subota",
       "kind": "regular",
-      "priceMultiplier": 1.3
+      "priceMultiplier": 1.3,
+      "startsAt": "2027-01-02T22:00:00.000Z"
     }
   ],
   "reservations": [
@@ -1667,246 +1692,354 @@
       "venueId": "demo-club-2",
       "eventId": "demo-club-2-ev-2026-11-14",
       "tableId": "demo-club-2-standard-17",
+      "code": "CM2JYZMR",
       "status": "held",
       "partySize": 2,
-      "createdAt": "2026-11-09T08:00:00.000Z",
-      "holdExpiresAt": "2026-11-09T08:15:00.000Z"
+      "minSpendCents": 19500,
+      "depositCents": 5850,
+      "promoterId": "demo-club-2-promo-01",
+      "createdAt": "2026-11-12T05:00:00.000Z",
+      "holdExpiresAt": "2026-11-14T22:00:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-002",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2027-01-02",
-      "tableId": "demo-club-2-lounge-05",
-      "status": "held",
-      "partySize": 2,
-      "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-12-31T05:00:00.000Z",
-      "holdExpiresAt": "2026-12-31T05:15:00.000Z"
+      "eventId": "demo-club-2-ev-2026-11-20",
+      "tableId": "demo-club-2-premium-16",
+      "code": "V5BFFF3G",
+      "status": "confirmed",
+      "partySize": 6,
+      "minSpendCents": 30000,
+      "depositCents": 9000,
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "paidAt": "2026-11-09T15:05:00.000Z",
+      "confirmedAt": "2026-11-09T15:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-003",
       "venueId": "demo-club-2",
       "eventId": "demo-club-2-ev-2026-11-20",
-      "tableId": "demo-club-2-premium-16",
+      "tableId": "demo-club-2-standard-24",
+      "code": "52WZR44J",
       "status": "confirmed",
-      "partySize": 3,
-      "createdAt": "2026-11-07T20:00:00.000Z"
+      "partySize": 2,
+      "minSpendCents": 15000,
+      "depositCents": 4500,
+      "createdAt": "2026-11-08T15:00:00.000Z",
+      "paidAt": "2026-11-08T15:05:00.000Z",
+      "confirmedAt": "2026-11-08T15:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-004",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-21",
-      "tableId": "demo-club-2-standard-04",
-      "status": "paid",
-      "partySize": 4,
-      "createdAt": "2026-11-10T15:00:00.000Z"
+      "eventId": "demo-club-2-ev-2026-12-04",
+      "tableId": "demo-club-2-premium-05",
+      "code": "XYWBUMWS",
+      "status": "confirmed",
+      "partySize": 3,
+      "minSpendCents": 30000,
+      "depositCents": 9000,
+      "createdAt": "2026-11-25T05:00:00.000Z",
+      "paidAt": "2026-11-25T05:05:00.000Z",
+      "confirmedAt": "2026-11-25T05:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-005",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-20",
-      "tableId": "demo-club-2-standard-24",
+      "eventId": "demo-club-2-ev-2026-12-03",
+      "tableId": "demo-club-2-premium-01",
+      "code": "2QJACVX8",
       "status": "confirmed",
-      "partySize": 4,
-      "createdAt": "2026-11-18T22:00:00.000Z"
+      "partySize": 3,
+      "minSpendCents": 18000,
+      "depositCents": 5400,
+      "createdAt": "2026-11-20T20:00:00.000Z",
+      "paidAt": "2026-11-20T20:05:00.000Z",
+      "confirmedAt": "2026-11-20T20:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-006",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-12",
-      "tableId": "demo-club-2-standard-08",
-      "status": "paid",
-      "partySize": 2,
-      "createdAt": "2026-10-31T15:00:00.000Z"
+      "eventId": "demo-club-2-ev-2026-11-14",
+      "tableId": "demo-club-2-premium-02",
+      "code": "5NZPB439",
+      "status": "checked_in",
+      "partySize": 4,
+      "minSpendCents": 39000,
+      "depositCents": 11700,
+      "promoterId": "demo-club-2-promo-02",
+      "createdAt": "2026-11-03T08:00:00.000Z",
+      "paidAt": "2026-11-03T08:05:00.000Z",
+      "confirmedAt": "2026-11-03T08:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-007",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-04",
-      "tableId": "demo-club-2-premium-05",
+      "eventId": "demo-club-2-ev-2026-11-14",
+      "tableId": "demo-club-2-lounge-21",
+      "code": "TT9YM7W7",
       "status": "confirmed",
-      "partySize": 6,
-      "promoterId": "demo-club-2-promo-02",
-      "createdAt": "2026-11-21T00:00:00.000Z"
+      "partySize": 5,
+      "minSpendCents": 32500,
+      "depositCents": 9750,
+      "createdAt": "2026-11-07T15:00:00.000Z",
+      "paidAt": "2026-11-07T15:05:00.000Z",
+      "confirmedAt": "2026-11-07T15:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-008",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-04",
-      "tableId": "demo-club-2-lounge-19",
-      "status": "held",
-      "partySize": 5,
-      "createdAt": "2026-11-24T17:00:00.000Z",
-      "holdExpiresAt": "2026-11-24T17:15:00.000Z"
+      "eventId": "demo-club-2-ev-2026-11-27",
+      "tableId": "demo-club-2-standard-20",
+      "code": "NT8GE7GC",
+      "status": "confirmed",
+      "partySize": 4,
+      "minSpendCents": 15000,
+      "depositCents": 4500,
+      "createdAt": "2026-11-17T16:00:00.000Z",
+      "paidAt": "2026-11-17T16:05:00.000Z",
+      "confirmedAt": "2026-11-17T16:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-009",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-28",
-      "tableId": "demo-club-2-standard-29",
-      "status": "confirmed",
+      "eventId": "demo-club-2-ev-2026-11-12",
+      "tableId": "demo-club-2-standard-23",
+      "code": "9F8W2PAG",
+      "status": "checked_in",
       "partySize": 2,
-      "promoterId": "demo-club-2-promo-02",
-      "createdAt": "2026-11-18T10:00:00.000Z"
+      "minSpendCents": 9000,
+      "depositCents": 2700,
+      "createdAt": "2026-10-31T18:00:00.000Z",
+      "paidAt": "2026-10-31T18:05:00.000Z",
+      "confirmedAt": "2026-10-31T18:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-010",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-20",
-      "tableId": "demo-club-2-vip-09",
+      "eventId": "demo-club-2-ev-2026-11-14",
+      "tableId": "demo-club-2-premium-13",
+      "code": "8E94639B",
       "status": "confirmed",
-      "partySize": 2,
-      "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-14T11:00:00.000Z"
+      "partySize": 3,
+      "minSpendCents": 39000,
+      "depositCents": 11700,
+      "createdAt": "2026-11-09T00:00:00.000Z",
+      "paidAt": "2026-11-09T00:05:00.000Z",
+      "confirmedAt": "2026-11-09T00:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-011",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-14",
-      "tableId": "demo-club-2-lounge-08",
-      "status": "no_show",
-      "partySize": 2,
+      "eventId": "demo-club-2-ev-2026-11-26",
+      "tableId": "demo-club-2-premium-12",
+      "code": "FSAKVBQM",
+      "status": "cancelled",
+      "partySize": 3,
+      "minSpendCents": 18000,
+      "depositCents": 5400,
       "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-04T15:00:00.000Z"
+      "createdAt": "2026-11-22T12:00:00.000Z",
+      "cancelledAt": "2026-11-22T12:05:00.000Z",
+      "cancelReason": "staff"
     },
     {
       "id": "demo-club-2-rsv-012",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-12",
-      "tableId": "demo-club-2-lounge-01",
+      "eventId": "demo-club-2-ev-2026-12-05",
+      "tableId": "demo-club-2-lounge-18",
+      "code": "K28AGDRU",
       "status": "confirmed",
       "partySize": 2,
-      "createdAt": "2026-12-04T18:00:00.000Z"
+      "minSpendCents": 32500,
+      "depositCents": 9750,
+      "promoterId": "demo-club-2-promo-02",
+      "createdAt": "2026-11-29T04:00:00.000Z",
+      "paidAt": "2026-11-29T04:05:00.000Z",
+      "confirmedAt": "2026-11-29T04:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-013",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-03",
-      "tableId": "demo-club-2-lounge-23",
-      "status": "confirmed",
+      "eventId": "demo-club-2-ev-2026-12-04",
+      "tableId": "demo-club-2-balkon-04",
+      "code": "YD6Y8YZP",
+      "status": "cancelled",
       "partySize": 2,
-      "createdAt": "2026-11-19T08:00:00.000Z"
+      "minSpendCents": 100000,
+      "depositCents": 30000,
+      "promoterId": "demo-club-2-promo-01",
+      "createdAt": "2026-11-26T10:00:00.000Z",
+      "cancelledAt": "2026-11-26T10:05:00.000Z",
+      "cancelReason": "staff"
     },
     {
       "id": "demo-club-2-rsv-014",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-21",
-      "tableId": "demo-club-2-standard-28",
-      "status": "held",
+      "eventId": "demo-club-2-ev-2027-01-01",
+      "tableId": "demo-club-2-lounge-06",
+      "code": "4S4E3XHE",
+      "status": "confirmed",
       "partySize": 3,
+      "minSpendCents": 25000,
+      "depositCents": 7500,
       "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-10T11:00:00.000Z",
-      "holdExpiresAt": "2026-11-10T11:15:00.000Z"
+      "createdAt": "2026-12-18T14:00:00.000Z",
+      "paidAt": "2026-12-18T14:05:00.000Z",
+      "confirmedAt": "2026-12-18T14:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-015",
       "venueId": "demo-club-2",
       "eventId": "demo-club-2-ev-2026-12-03",
-      "tableId": "demo-club-2-standard-20",
+      "tableId": "demo-club-2-premium-04",
+      "code": "SJ437QGW",
       "status": "paid",
-      "partySize": 3,
-      "promoterId": "demo-club-2-promo-02",
-      "createdAt": "2026-11-27T18:00:00.000Z"
+      "partySize": 2,
+      "minSpendCents": 18000,
+      "depositCents": 5400,
+      "createdAt": "2026-11-24T01:00:00.000Z",
+      "paidAt": "2026-11-24T01:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-016",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-04",
-      "tableId": "demo-club-2-premium-10",
-      "status": "held",
+      "eventId": "demo-club-2-ev-2026-11-21",
+      "tableId": "demo-club-2-lounge-16",
+      "code": "XCSQPGSZ",
+      "status": "paid",
       "partySize": 6,
+      "minSpendCents": 32500,
+      "depositCents": 9750,
       "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-12-03T16:00:00.000Z",
-      "holdExpiresAt": "2026-12-03T16:15:00.000Z"
+      "createdAt": "2026-11-10T20:00:00.000Z",
+      "paidAt": "2026-11-10T20:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-017",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-04",
-      "tableId": "demo-club-2-standard-03",
-      "status": "held",
-      "partySize": 4,
-      "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-29T11:00:00.000Z",
-      "holdExpiresAt": "2026-11-29T11:15:00.000Z"
+      "eventId": "demo-club-2-ev-2026-12-05",
+      "tableId": "demo-club-2-premium-07",
+      "code": "4BPCBQBJ",
+      "status": "confirmed",
+      "partySize": 2,
+      "minSpendCents": 39000,
+      "depositCents": 11700,
+      "createdAt": "2026-11-26T06:00:00.000Z",
+      "paidAt": "2026-11-26T06:05:00.000Z",
+      "confirmedAt": "2026-11-26T06:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-018",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-05",
-      "tableId": "demo-club-2-standard-16",
-      "status": "paid",
-      "partySize": 3,
+      "eventId": "demo-club-2-ev-2026-12-19",
+      "tableId": "demo-club-2-lounge-19",
+      "code": "CHMVNMEV",
+      "status": "confirmed",
+      "partySize": 6,
+      "minSpendCents": 37500,
+      "depositCents": 11250,
       "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-30T17:00:00.000Z"
+      "createdAt": "2026-12-14T18:00:00.000Z",
+      "paidAt": "2026-12-14T18:05:00.000Z",
+      "confirmedAt": "2026-12-14T18:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-019",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-12",
-      "tableId": "demo-club-2-standard-22",
-      "status": "confirmed",
-      "partySize": 3,
-      "createdAt": "2026-11-07T00:00:00.000Z"
+      "eventId": "demo-club-2-ev-2026-11-13",
+      "tableId": "demo-club-2-lounge-11",
+      "code": "SVDPEPPC",
+      "status": "paid",
+      "partySize": 6,
+      "minSpendCents": 25000,
+      "depositCents": 7500,
+      "createdAt": "2026-11-11T03:00:00.000Z",
+      "paidAt": "2026-11-11T03:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-020",
       "venueId": "demo-club-2",
       "eventId": "demo-club-2-ev-2026-11-26",
-      "tableId": "demo-club-2-premium-12",
+      "tableId": "demo-club-2-lounge-05",
+      "code": "T7CYJXKZ",
       "status": "cancelled",
-      "partySize": 3,
-      "createdAt": "2026-11-19T04:00:00.000Z"
+      "partySize": 2,
+      "minSpendCents": 15000,
+      "depositCents": 4500,
+      "promoterId": "demo-club-2-promo-02",
+      "createdAt": "2026-11-25T06:00:00.000Z",
+      "cancelledAt": "2026-11-25T06:05:00.000Z",
+      "cancelReason": "staff"
     },
     {
       "id": "demo-club-2-rsv-021",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-27",
-      "tableId": "demo-club-2-lounge-14",
-      "status": "held",
-      "partySize": 3,
-      "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-23T12:00:00.000Z",
-      "holdExpiresAt": "2026-11-23T12:15:00.000Z"
+      "eventId": "demo-club-2-ev-2026-11-28",
+      "tableId": "demo-club-2-vip-01",
+      "code": "FD2MXNHE",
+      "status": "paid",
+      "partySize": 6,
+      "minSpendCents": 75000,
+      "depositCents": 22500,
+      "createdAt": "2026-11-18T14:00:00.000Z",
+      "paidAt": "2026-11-18T14:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-022",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-05",
-      "tableId": "demo-club-2-lounge-18",
-      "status": "confirmed",
-      "partySize": 3,
+      "eventId": "demo-club-2-ev-2026-12-18",
+      "tableId": "demo-club-2-standard-10",
+      "code": "NFG9MJ8T",
+      "status": "paid",
+      "partySize": 2,
+      "minSpendCents": 15000,
+      "depositCents": 4500,
       "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-27T22:00:00.000Z"
+      "createdAt": "2026-12-15T19:00:00.000Z",
+      "paidAt": "2026-12-15T19:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-023",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-11-28",
-      "tableId": "demo-club-2-lounge-24",
-      "status": "paid",
+      "eventId": "demo-club-2-ev-2026-11-21",
+      "tableId": "demo-club-2-standard-09",
+      "code": "MVJNB4US",
+      "status": "checked_in",
       "partySize": 3,
-      "createdAt": "2026-11-16T21:00:00.000Z"
+      "minSpendCents": 19500,
+      "depositCents": 5850,
+      "createdAt": "2026-11-20T04:00:00.000Z",
+      "paidAt": "2026-11-20T04:05:00.000Z",
+      "confirmedAt": "2026-11-20T04:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-024",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-04",
-      "tableId": "demo-club-2-balkon-04",
-      "status": "cancelled",
-      "partySize": 3,
-      "createdAt": "2026-11-20T14:00:00.000Z"
+      "eventId": "demo-club-2-ev-2026-11-19",
+      "tableId": "demo-club-2-standard-09",
+      "code": "BT46SDUD",
+      "status": "confirmed",
+      "partySize": 2,
+      "minSpendCents": 9000,
+      "depositCents": 2700,
+      "createdAt": "2026-11-14T21:00:00.000Z",
+      "paidAt": "2026-11-14T21:05:00.000Z",
+      "confirmedAt": "2026-11-14T21:05:00.000Z"
     },
     {
       "id": "demo-club-2-rsv-025",
       "venueId": "demo-club-2",
-      "eventId": "demo-club-2-ev-2026-12-05",
-      "tableId": "demo-club-2-balkon-02",
-      "status": "held",
-      "partySize": 2,
-      "promoterId": "demo-club-2-promo-01",
-      "createdAt": "2026-11-27T10:00:00.000Z",
-      "holdExpiresAt": "2026-11-27T10:15:00.000Z"
+      "eventId": "demo-club-2-ev-2026-12-04",
+      "tableId": "demo-club-2-standard-11",
+      "code": "YZY8KB2E",
+      "status": "confirmed",
+      "partySize": 4,
+      "minSpendCents": 15000,
+      "depositCents": 4500,
+      "createdAt": "2026-12-01T01:00:00.000Z",
+      "paidAt": "2026-12-01T01:05:00.000Z",
+      "confirmedAt": "2026-12-01T01:05:00.000Z"
     }
   ],
   "promoters": [
@@ -1922,5 +2055,6 @@
       "name": "Promotor Epsilon",
       "code": "EPSILON02"
     }
-  ]
+  ],
+  "paymentAttempts": []
 }

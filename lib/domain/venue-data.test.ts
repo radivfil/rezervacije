@@ -17,10 +17,23 @@ function messages(data: unknown): string[] {
   return result.success ? [] : result.error.issues.map((issue) => issue.message);
 }
 
+let codeCounter = 0;
+
 function reservation(overrides: Partial<Reservation>): Reservation {
   const first = base.reservations[0];
   if (!first) throw new Error("seed bez rezervacija");
-  return { ...first, status: "confirmed", holdExpiresAt: undefined, ...overrides };
+  codeCounter += 1;
+  const code = `TESTCD${"23456789"[codeCounter % 8]}${"ABCDEFGH"[Math.floor(codeCounter / 8) % 8]}`;
+  const status = overrides.status ?? "confirmed";
+  return {
+    ...first,
+    code,
+    status,
+    holdExpiresAt: undefined,
+    cancelledAt: undefined,
+    cancelReason: status === "cancelled" ? "staff" : undefined,
+    ...overrides,
+  };
 }
 
 describe("sheme entiteta", () => {
@@ -73,6 +86,18 @@ describe("VenueDataSchema", () => {
     const data = clone();
     data.reservations = [reservation({ id: "r-1", status: "held" })];
     expect(messages(data)).toContain("Držana rezervacija mora imati holdExpiresAt");
+  });
+
+  it("odbija duplikat koda i cancelled bez razloga", () => {
+    const data = clone();
+    data.reservations = [
+      reservation({ id: "r-1", code: "AAAAAAAA" }),
+      reservation({ id: "r-2", code: "AAAAAAAA", eventId: base.events[1]?.id }),
+      reservation({ id: "r-3", status: "cancelled", cancelReason: undefined, eventId: base.events[2]?.id }),
+    ];
+    const errors = messages(data);
+    expect(errors).toContain("Duplikat koda: AAAAAAAA");
+    expect(errors).toContain("cancelReason je obavezan točno za status cancelled");
   });
 
   it("odbija broj gostiju veći od kapaciteta", () => {

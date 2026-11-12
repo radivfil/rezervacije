@@ -34,6 +34,8 @@ export const VenueThemeSchema = z.object({
 export const VenuePolicySchema = z.object({
   /** Do koliko sati prije početka termina gost može besplatno otkazati. */
   freeCancellationHours: z.number().int().nonnegative(),
+  /** Koliko minuta se stol drži dok gost plaća akontaciju. */
+  holdMinutes: z.number().int().positive(),
 });
 
 export const VenueSchema = z.object({
@@ -109,6 +111,8 @@ export const EventSchema = z.object({
   name: z.string().min(1),
   kind: EventKindSchema,
   priceMultiplier: z.number().positive(),
+  /** Početak termina (UTC). */
+  startsAt: IsoDateTimeSchema,
 });
 
 export const ReservationStatusSchema = z.enum([
@@ -120,17 +124,50 @@ export const ReservationStatusSchema = z.enum([
   "cancelled",
 ]);
 
+/** Abeceda koda rezervacije: bez 0/O, 1/I/L radi čitljivosti. */
+export const RESERVATION_CODE_ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
+export const RESERVATION_CODE_LENGTH = 8;
+export const ReservationCodeSchema = z.string().regex(/^[2-9A-HJKMNP-Z]{8}$/, "Neispravan kod rezervacije");
+
+export const CancelReasonSchema = z.enum(["hold_expired", "payment_abandoned", "staff"]);
+
+/** Mobitel u E.164 formatu (npr. +385911234567). */
+export const PhoneE164Schema = z.string().regex(/^\+[1-9]\d{7,14}$/, "Neispravan broj mobitela");
+
 export const ReservationSchema = z.object({
   id: IdSchema,
   venueId: IdSchema,
   eventId: IdSchema,
   tableId: IdSchema,
+  code: ReservationCodeSchema,
   status: ReservationStatusSchema,
   partySize: z.number().int().positive(),
+  /** Podaci gosta: obavezni kad rezervira gost, seed ih nema. */
+  guestName: z.string().min(2).max(60).optional(),
+  guestPhone: PhoneE164Schema.optional(),
+  /** Cijena zamrznuta u trenutku rezervacije (centi). */
+  minSpendCents: z.number().int().nonnegative(),
+  depositCents: z.number().int().nonnegative(),
   promoterId: IdSchema.optional(),
   createdAt: IsoDateTimeSchema,
   /** Samo za status "held": trenutak isteka držanja. */
   holdExpiresAt: IsoDateTimeSchema.optional(),
+  paidAt: IsoDateTimeSchema.optional(),
+  confirmedAt: IsoDateTimeSchema.optional(),
+  cancelledAt: IsoDateTimeSchema.optional(),
+  cancelReason: CancelReasonSchema.optional(),
+});
+
+export const PaymentResultSchema = z.enum(["succeeded", "failed"]);
+
+/** Demo pokušaj plaćanja akontacije (bez pravog naplatnog sustava). */
+export const PaymentAttemptSchema = z.object({
+  id: IdSchema,
+  venueId: IdSchema,
+  reservationId: IdSchema,
+  amountCents: z.number().int().nonnegative(),
+  result: PaymentResultSchema,
+  createdAt: IsoDateTimeSchema,
 });
 
 export const PromoterSchema = z.object({

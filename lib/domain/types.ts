@@ -1,10 +1,13 @@
 import type { z } from "zod";
 import type {
+  CancelReasonSchema,
   DecorationKindSchema,
   DecorationSchema,
   EventKindSchema,
   EventSchema,
   FloorSchema,
+  PaymentAttemptSchema,
+  PaymentResultSchema,
   PromoterSchema,
   ReservationSchema,
   ReservationStatusSchema,
@@ -31,4 +34,7 @@ export type Event = z.infer<typeof EventSchema>;
 export type ReservationStatus = z.infer<typeof ReservationStatusSchema>;
 export type Reservation = z.infer<typeof ReservationSchema>;
 export type Promoter = z.infer<typeof PromoterSchema>;
+export type CancelReason = z.infer<typeof CancelReasonSchema>;
+export type PaymentResult = z.infer<typeof PaymentResultSchema>;
+export type PaymentAttempt = z.infer<typeof PaymentAttemptSchema>;
 export type VenueData = z.infer<typeof VenueDataSchema>;

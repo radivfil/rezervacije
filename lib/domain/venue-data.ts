@@ -4,6 +4,7 @@ import {
   DecorationSchema,
   EventSchema,
   FloorSchema,
+  PaymentAttemptSchema,
   PromoterSchema,
   ReservationSchema,
   TableSchema,
@@ -26,6 +27,7 @@ export const VenueDataSchema = z
     events: z.array(EventSchema),
     reservations: z.array(ReservationSchema),
     promoters: z.array(PromoterSchema),
+    paymentAttempts: z.array(PaymentAttemptSchema).default([]),
   })
   .superRefine((data, ctx) => {
     const venueId = data.venue.id;
@@ -41,6 +43,7 @@ export const VenueDataSchema = z
       events: data.events,
       reservations: data.reservations,
       promoters: data.promoters,
+      paymentAttempts: data.paymentAttempts,
     } as const;
 
     for (const [name, items] of Object.entries(collections)) {
@@ -102,6 +105,25 @@ export const VenueDataSchema = z
       }
       if (reservation.status !== "held" && reservation.holdExpiresAt) {
         report(["reservations", index, "holdExpiresAt"], "holdExpiresAt je dopušten samo za status held");
+      }
+      if ((reservation.status === "cancelled") !== Boolean(reservation.cancelReason)) {
+        report(["reservations", index, "cancelReason"], "cancelReason je obavezan točno za status cancelled");
+      }
+      if (reservation.depositCents > reservation.minSpendCents) {
+        report(["reservations", index, "depositCents"], "Akontacija ne može biti veća od min. potrošnje");
+      }
+    });
+
+    const codes = new Set<string>();
+    data.reservations.forEach((reservation, index) => {
+      if (codes.has(reservation.code)) report(["reservations", index, "code"], `Duplikat koda: ${reservation.code}`);
+      codes.add(reservation.code);
+    });
+
+    const reservationIds = new Set(data.reservations.map((reservation) => reservation.id));
+    data.paymentAttempts.forEach((attempt, index) => {
+      if (!reservationIds.has(attempt.reservationId)) {
+        report(["paymentAttempts", index, "reservationId"], `Nepoznata rezervacija: ${attempt.reservationId}`);
       }
     });
 

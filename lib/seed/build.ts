@@ -10,8 +10,10 @@ import type {
   Zone,
 } from "../domain/types";
 import { tableEventKey } from "../domain/reservation-rules";
+import { calculateTablePrice } from "../pricing";
+import { generateReservationCode } from "../reservations/code";
 import { VenueDataSchema } from "../domain/venue-data";
-import { generateEvents } from "./events";
+import { EVENT_START_TIME, generateEvents } from "./events";
 import { DEFAULT_FLOORS, type FloorLayout } from "./layout";
 import { createRandom, type Random } from "./random";
 import type { VenueSeedConfig } from "./venues";
@@ -106,10 +108,13 @@ function buildReservations(
   venueId: string,
   count: number,
   tables: readonly Table[],
+  zones: readonly Zone[],
   events: readonly Event[],
   promoters: readonly Promoter[],
   random: Random,
 ): Reservation[] {
+  const zonesById = new Map(zones.map((zone) => [zone.id, zone]));
+  const codes = new Set<string>();
   const reservations: Reservation[] = [];
   const activeKeys = new Set<string>();
   const usedKeys = new Set<string>();
@@ -128,19 +133,37 @@ function buildReservations(
     usedKeys.add(key);
     if (isActive) activeKeys.add(key);
 
-    const eventStart = Date.parse(`${event.date}T22:00:00Z`);
+    const zone = zonesById.get(table.zoneId);
+    if (!zone) throw new Error(`Nepoznata zona ${table.zoneId}`);
+    const price = calculateTablePrice(zone, event);
+    let code = generateReservationCode((max) => random.int(0, max - 1));
+    while (codes.has(code)) code = generateReservationCode((max) => random.int(0, max - 1));
+    codes.add(code);
+
+    const eventStart = Date.parse(event.startsAt);
     const createdAt = new Date(eventStart - random.int(1, 14) * 86_400_000 - random.int(0, 23) * 3_600_000);
+    const later = new Date(createdAt.getTime() + 5 * 60_000).toISOString();
     const reservation: Reservation = {
       id: `${venueId}-rsv-${String(reservations.length + 1).padStart(3, "0")}`,
       venueId,
       eventId: event.id,
       tableId: table.id,
+      code,
       status,
       partySize: random.int(Math.min(2, table.capacity), table.capacity),
+      minSpendCents: price.minSpendCents,
+      depositCents: price.depositCents,
       createdAt: createdAt.toISOString(),
     };
-    if (status === "held") {
-      reservation.holdExpiresAt = new Date(createdAt.getTime() + 15 * 60_000).toISOString();
+    // Seed "held" = držanje kluba/promotora do početka termina (canvas 02, pravilo 8).
+    if (status === "held") reservation.holdExpiresAt = event.startsAt;
+    if (status === "paid" || status === "confirmed" || status === "checked_in" || status === "no_show") {
+      reservation.paidAt = later;
+    }
+    if (status === "confirmed" || status === "checked_in" || status === "no_show") reservation.confirmedAt = later;
+    if (status === "cancelled") {
+      reservation.cancelledAt = later;
+      reservation.cancelReason = "staff";
     }
     if (promoters.length > 0 && random.next() < 0.4) {
       reservation.promoterId = random.pick(promoters).id;
@@ -159,14 +182,17 @@ export function buildVenueData(config: VenueSeedConfig, options: BuildOptions): 
   const venueId = config.venue.id;
   const random = createRandom(config.randomSeed);
   const { floors, zones, tables, decorations } = buildLayout(venueId, options.floors ?? DEFAULT_FLOORS);
-  const events = generateEvents(venueId, options.startDate, options.weeks ?? 8);
+  const events = generateEvents(venueId, options.startDate, options.weeks ?? 8, {
+    timeZone: config.venue.timezone,
+    startTime: EVENT_START_TIME,
+  });
   const promoters: Promoter[] = config.promoterNames.map((name, index) => ({
     id: `${venueId}-promo-${pad(index + 1)}`,
     venueId,
     name,
     code: `${name.split(" ").at(-1)?.toUpperCase().replace(/[^A-Z0-9]/g, "") ?? "PROMO"}${pad(index + 1)}`,
   }));
-  const reservations = buildReservations(venueId, config.reservationCount, tables, events, promoters, random);
+  const reservations = buildReservations(venueId, config.reservationCount, tables, zones, events, promoters, random);
 
   return VenueDataSchema.parse({
     venue: config.venue,
@@ -177,5 +203,6 @@ export function buildVenueData(config: VenueSeedConfig, options: BuildOptions): 
     events,
     reservations,
     promoters,
+    paymentAttempts: [],
   });
 }

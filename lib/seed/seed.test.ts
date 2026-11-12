@@ -151,9 +151,38 @@ describe("buildVenueData (Demo Club)", () => {
         expect.arrayContaining(["id", "eventId", "tableId", "status", "partySize", "createdAt"]),
       );
       for (const key of Object.keys(reservation)) {
-        expect(["id", "venueId", "eventId", "tableId", "status", "partySize", "promoterId", "createdAt", "holdExpiresAt"]).toContain(key);
+        expect([
+          "id",
+          "venueId",
+          "eventId",
+          "tableId",
+          "code",
+          "status",
+          "partySize",
+          "minSpendCents",
+          "depositCents",
+          "promoterId",
+          "createdAt",
+          "holdExpiresAt",
+          "paidAt",
+          "confirmedAt",
+          "cancelledAt",
+          "cancelReason",
+        ]).toContain(key);
       }
     }
+  });
+
+  it("held iz seeda drži stol do početka termina, cijena je zamrznuta", () => {
+    for (const reservation of data.reservations) {
+      const event = data.events.find((candidate) => candidate.id === reservation.eventId);
+      if (reservation.status === "held") expect(reservation.holdExpiresAt).toBe(event?.startsAt);
+      expect(reservation.depositCents).toBe(Math.round(reservation.minSpendCents * 0.3));
+    }
+  });
+
+  it("termini počinju u 23:00 po vremenu kluba", () => {
+    expect(data.events[0]?.startsAt).toBe("2026-11-12T22:00:00.000Z");
   });
 
   it("je deterministički za isti početni datum", () => {
