@@ -7,8 +7,8 @@ import { normalizePhone } from "./phone";
 
 export type Result<T, E extends string> = { ok: true; value: T } | { ok: false; error: E };
 
-const ok = <T>(value: T): { ok: true; value: T } => ({ ok: true, value });
-const fail = <E extends string>(error: E): { ok: false; error: E } => ({ ok: false, error });
+export const ok = <T>(value: T): { ok: true; value: T } => ({ ok: true, value });
+export const fail = <E extends string>(error: E): { ok: false; error: E } => ({ ok: false, error });
 
 /** Ulaz gosta (forma). Polja s greškom vraćaju se kao ključevi poruka. */
 export const ReservationRequestSchema = z.object({
@@ -71,6 +71,23 @@ export function hasEventStarted(event: Pick<Event, "startsAt">, now: Date): bool
 
 export type HoldError = "event_started" | "table_unavailable" | "party_too_large";
 
+/** Pravila 1-2 i 7 zajednička gostu i osoblju; vraća grešku ili null. */
+export function checkBookable(input: {
+  table: Table;
+  event: Event;
+  partySize: number;
+  existing: readonly Reservation[];
+  now: Date;
+}): HoldError | null {
+  const { table, event, partySize, existing, now } = input;
+  if (hasEventStarted(event, now)) return "event_started";
+  if (partySize > table.capacity) return "party_too_large";
+  const taken = existing.some(
+    (reservation) => reservation.tableId === table.id && reservation.eventId === event.id && isActiveAt(reservation, now),
+  );
+  return taken ? "table_unavailable" : null;
+}
+
 /**
  * Pravila 1-4: provjera i stvaranje držanja.
  * `existing` su rezervacije istog kluba; poziva se sinkrono unutar spremišta (pravilo 7).
@@ -87,12 +104,8 @@ export function createHold(input: {
   now: Date;
 }): Result<Reservation, HoldError> {
   const { request, table, zone, event, policy, existing, now } = input;
-  if (hasEventStarted(event, now)) return fail("event_started");
-  if (request.partySize > table.capacity) return fail("party_too_large");
-  const taken = existing.some(
-    (reservation) => reservation.tableId === table.id && reservation.eventId === event.id && isActiveAt(reservation, now),
-  );
-  if (taken) return fail("table_unavailable");
+  const blocked = checkBookable({ table, event, partySize: request.partySize, existing, now });
+  if (blocked) return fail(blocked);
 
   const price = calculateTablePrice(zone, event);
   return ok({
@@ -109,6 +122,7 @@ export function createHold(input: {
     depositCents: price.depositCents,
     createdAt: now.toISOString(),
     holdExpiresAt: new Date(now.getTime() + policy.holdMinutes * 60_000).toISOString(),
+    source: "guest",
   });
 }
 

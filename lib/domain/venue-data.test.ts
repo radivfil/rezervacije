@@ -32,6 +32,8 @@ function reservation(overrides: Partial<Reservation>): Reservation {
     holdExpiresAt: undefined,
     cancelledAt: undefined,
     cancelReason: status === "cancelled" ? "staff" : undefined,
+    checkedInAt: status === "checked_in" ? first.createdAt : undefined,
+    noShowAt: status === "no_show" ? first.createdAt : undefined,
     ...overrides,
   };
 }

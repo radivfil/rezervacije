@@ -154,6 +154,7 @@ function buildReservations(
       minSpendCents: price.minSpendCents,
       depositCents: price.depositCents,
       createdAt: createdAt.toISOString(),
+      source: "seed",
     };
     // Seed "held" = držanje kluba/promotora do početka termina (canvas 02, pravilo 8).
     if (status === "held") reservation.holdExpiresAt = event.startsAt;
@@ -161,6 +162,8 @@ function buildReservations(
       reservation.paidAt = later;
     }
     if (status === "confirmed" || status === "checked_in" || status === "no_show") reservation.confirmedAt = later;
+    if (status === "checked_in") reservation.checkedInAt = event.startsAt;
+    if (status === "no_show") reservation.noShowAt = event.startsAt;
     if (status === "cancelled") {
       reservation.cancelledAt = later;
       reservation.cancelReason = "staff";

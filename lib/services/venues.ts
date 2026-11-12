@@ -1,4 +1,4 @@
-import type { Event, Venue } from "../domain/types";
+import type { Event, PublicVenue } from "../domain/types";
 import { services } from "./instance";
 import type { BookingContext, FloorplanData } from "./memory";
 
@@ -12,8 +12,13 @@ export function listVenueSlugs(): Promise<string[]> {
   return services().listVenueSlugs();
 }
 
-export function getVenue(slug: string): Promise<Venue | null> {
+export function getVenue(slug: string): Promise<PublicVenue | null> {
   return services().getVenue(slug);
+}
+
+/** Samo za prijavu osoblja na serveru. */
+export function getAdminPinHash(slug: string): Promise<string | null> {
+  return services().getAdminPinHash(slug);
 }
 
 export function listEvents(slug: string): Promise<Event[]> {

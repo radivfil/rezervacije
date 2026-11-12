@@ -7,7 +7,9 @@ import type {
   EventSchema,
   FloorSchema,
   PaymentAttemptSchema,
+  PaymentMethodSchema,
   PaymentResultSchema,
+  ReservationSourceSchema,
   PromoterSchema,
   ReservationSchema,
   ReservationStatusSchema,
@@ -36,5 +38,9 @@ export type Reservation = z.infer<typeof ReservationSchema>;
 export type Promoter = z.infer<typeof PromoterSchema>;
 export type CancelReason = z.infer<typeof CancelReasonSchema>;
 export type PaymentResult = z.infer<typeof PaymentResultSchema>;
+export type PaymentMethod = z.infer<typeof PaymentMethodSchema>;
+export type ReservationSource = z.infer<typeof ReservationSourceSchema>;
+/** Klub bez tajnih polja: smije se slati u preglednik. */
+export type PublicVenue = Omit<Venue, "adminPinHash">;
 export type PaymentAttempt = z.infer<typeof PaymentAttemptSchema>;
 export type VenueData = z.infer<typeof VenueDataSchema>;

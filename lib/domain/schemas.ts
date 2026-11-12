@@ -47,6 +47,8 @@ export const VenueSchema = z.object({
   timezone: z.string().min(1),
   theme: VenueThemeSchema,
   policy: VenuePolicySchema,
+  /** SHA-256 heks PIN-a osoblja (canvas 03). */
+  adminPinHash: z.string().regex(/^[0-9a-f]{64}$/, "adminPinHash mora biti SHA-256 heks"),
 });
 
 export const FloorSchema = z.object({
@@ -129,6 +131,8 @@ export const RESERVATION_CODE_ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
 export const RESERVATION_CODE_LENGTH = 8;
 export const ReservationCodeSchema = z.string().regex(/^[2-9A-HJKMNP-Z]{8}$/, "Neispravan kod rezervacije");
 
+export const ReservationSourceSchema = z.enum(["guest", "staff", "seed"]);
+
 export const CancelReasonSchema = z.enum(["hold_expired", "payment_abandoned", "staff"]);
 
 /** Mobitel u E.164 formatu (npr. +385911234567). */
@@ -156,9 +160,14 @@ export const ReservationSchema = z.object({
   confirmedAt: IsoDateTimeSchema.optional(),
   cancelledAt: IsoDateTimeSchema.optional(),
   cancelReason: CancelReasonSchema.optional(),
+  checkedInAt: IsoDateTimeSchema.optional(),
+  noShowAt: IsoDateTimeSchema.optional(),
+  source: ReservationSourceSchema,
 });
 
 export const PaymentResultSchema = z.enum(["succeeded", "failed"]);
+/** demo = demo plaćanje gosta; venue = akontacija primljena izvan aplikacije (osoblje). */
+export const PaymentMethodSchema = z.enum(["demo", "venue"]);
 
 /** Demo pokušaj plaćanja akontacije (bez pravog naplatnog sustava). */
 export const PaymentAttemptSchema = z.object({
@@ -166,6 +175,7 @@ export const PaymentAttemptSchema = z.object({
   venueId: IdSchema,
   reservationId: IdSchema,
   amountCents: z.number().int().nonnegative(),
+  method: PaymentMethodSchema,
   result: PaymentResultSchema,
   createdAt: IsoDateTimeSchema,
 });

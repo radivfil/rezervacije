@@ -1,3 +1,4 @@
+import { hashPin } from "../admin/pin";
 import type { Venue } from "../domain/types";
 
 export interface VenueSeedConfig {
@@ -27,6 +28,8 @@ export const DEMO_CLUB: VenueSeedConfig = {
       fontFamily: "Inter",
     },
     policy: { freeCancellationHours: 48, holdMinutes: 10 },
+    // Demo PIN osoblja: 1234 (vidi README).
+    adminPinHash: hashPin("1234"),
   },
   promoterNames: ["Promotor Alfa", "Promotor Beta", "Promotor Gama"],
   reservationCount: 40,
@@ -53,6 +56,8 @@ export const DEMO_CLUB_2: VenueSeedConfig = {
       fontFamily: "Playfair Display",
     },
     policy: { freeCancellationHours: 24, holdMinutes: 10 },
+    // Demo PIN osoblja: 4321 (vidi README).
+    adminPinHash: hashPin("4321"),
   },
   promoterNames: ["Promotor Delta", "Promotor Epsilon"],
   reservationCount: 25,

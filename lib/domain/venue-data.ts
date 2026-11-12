@@ -109,6 +109,12 @@ export const VenueDataSchema = z
       if ((reservation.status === "cancelled") !== Boolean(reservation.cancelReason)) {
         report(["reservations", index, "cancelReason"], "cancelReason je obavezan točno za status cancelled");
       }
+      if ((reservation.status === "checked_in") !== Boolean(reservation.checkedInAt)) {
+        report(["reservations", index, "checkedInAt"], "checkedInAt je obavezan točno za status checked_in");
+      }
+      if ((reservation.status === "no_show") !== Boolean(reservation.noShowAt)) {
+        report(["reservations", index, "noShowAt"], "noShowAt je obavezan točno za status no_show");
+      }
       if (reservation.depositCents > reservation.minSpendCents) {
         report(["reservations", index, "depositCents"], "Akontacija ne može biti veća od min. potrošnje");
       }

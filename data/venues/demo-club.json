@@ -20,7 +20,8 @@
     "policy": {
       "freeCancellationHours": 48,
       "holdMinutes": 10
-    }
+    },
+    "adminPinHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
   },
   "floors": [
     {
@@ -1699,7 +1700,8 @@
       "depositCents": 9750,
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-12-01T13:00:00.000Z",
-      "holdExpiresAt": "2026-12-05T22:00:00.000Z"
+      "holdExpiresAt": "2026-12-05T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-002",
@@ -1713,7 +1715,8 @@
       "depositCents": 9000,
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-12-23T11:00:00.000Z",
-      "paidAt": "2026-12-23T11:05:00.000Z"
+      "paidAt": "2026-12-23T11:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-003",
@@ -1727,7 +1730,8 @@
       "depositCents": 5850,
       "createdAt": "2026-12-09T21:00:00.000Z",
       "paidAt": "2026-12-09T21:05:00.000Z",
-      "confirmedAt": "2026-12-09T21:05:00.000Z"
+      "confirmedAt": "2026-12-09T21:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-004",
@@ -1741,7 +1745,9 @@
       "depositCents": 4500,
       "createdAt": "2026-11-23T11:00:00.000Z",
       "paidAt": "2026-11-23T11:05:00.000Z",
-      "confirmedAt": "2026-11-23T11:05:00.000Z"
+      "confirmedAt": "2026-11-23T11:05:00.000Z",
+      "checkedInAt": "2026-12-04T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-005",
@@ -1755,7 +1761,8 @@
       "depositCents": 14400,
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-02T17:00:00.000Z",
-      "holdExpiresAt": "2026-11-12T22:00:00.000Z"
+      "holdExpiresAt": "2026-11-12T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-006",
@@ -1770,7 +1777,9 @@
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-24T20:00:00.000Z",
       "paidAt": "2026-11-24T20:05:00.000Z",
-      "confirmedAt": "2026-11-24T20:05:00.000Z"
+      "confirmedAt": "2026-11-24T20:05:00.000Z",
+      "checkedInAt": "2026-11-26T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-007",
@@ -1783,7 +1792,8 @@
       "minSpendCents": 50000,
       "depositCents": 15000,
       "createdAt": "2026-11-21T01:00:00.000Z",
-      "paidAt": "2026-11-21T01:05:00.000Z"
+      "paidAt": "2026-11-21T01:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-008",
@@ -1796,7 +1806,8 @@
       "minSpendCents": 30000,
       "depositCents": 9000,
       "createdAt": "2026-11-03T18:00:00.000Z",
-      "paidAt": "2026-11-03T18:05:00.000Z"
+      "paidAt": "2026-11-03T18:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-009",
@@ -1811,7 +1822,8 @@
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-22T06:00:00.000Z",
       "paidAt": "2026-11-22T06:05:00.000Z",
-      "confirmedAt": "2026-11-22T06:05:00.000Z"
+      "confirmedAt": "2026-11-22T06:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-010",
@@ -1826,7 +1838,9 @@
       "promoterId": "demo-club-promo-01",
       "createdAt": "2026-11-23T01:00:00.000Z",
       "paidAt": "2026-11-23T01:05:00.000Z",
-      "confirmedAt": "2026-11-23T01:05:00.000Z"
+      "confirmedAt": "2026-11-23T01:05:00.000Z",
+      "noShowAt": "2026-11-28T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-011",
@@ -1839,7 +1853,8 @@
       "minSpendCents": 9000,
       "depositCents": 2700,
       "createdAt": "2026-11-09T11:00:00.000Z",
-      "paidAt": "2026-11-09T11:05:00.000Z"
+      "paidAt": "2026-11-09T11:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-012",
@@ -1853,7 +1868,8 @@
       "depositCents": 5850,
       "createdAt": "2026-11-04T04:00:00.000Z",
       "paidAt": "2026-11-04T04:05:00.000Z",
-      "confirmedAt": "2026-11-04T04:05:00.000Z"
+      "confirmedAt": "2026-11-04T04:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-013",
@@ -1868,7 +1884,9 @@
       "promoterId": "demo-club-promo-01",
       "createdAt": "2026-11-28T07:00:00.000Z",
       "paidAt": "2026-11-28T07:05:00.000Z",
-      "confirmedAt": "2026-11-28T07:05:00.000Z"
+      "confirmedAt": "2026-11-28T07:05:00.000Z",
+      "checkedInAt": "2026-12-03T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-014",
@@ -1882,7 +1900,8 @@
       "depositCents": 31200,
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-15T13:00:00.000Z",
-      "paidAt": "2026-11-15T13:05:00.000Z"
+      "paidAt": "2026-11-15T13:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-015",
@@ -1896,7 +1915,8 @@
       "depositCents": 2700,
       "promoterId": "demo-club-promo-02",
       "createdAt": "2026-12-15T19:00:00.000Z",
-      "holdExpiresAt": "2026-12-24T22:00:00.000Z"
+      "holdExpiresAt": "2026-12-24T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-016",
@@ -1911,7 +1931,8 @@
       "promoterId": "demo-club-promo-01",
       "createdAt": "2026-11-10T19:00:00.000Z",
       "paidAt": "2026-11-10T19:05:00.000Z",
-      "confirmedAt": "2026-11-10T19:05:00.000Z"
+      "confirmedAt": "2026-11-10T19:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-017",
@@ -1924,7 +1945,8 @@
       "minSpendCents": 15000,
       "depositCents": 4500,
       "createdAt": "2026-11-18T08:00:00.000Z",
-      "paidAt": "2026-11-18T08:05:00.000Z"
+      "paidAt": "2026-11-18T08:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-018",
@@ -1938,7 +1960,8 @@
       "depositCents": 5850,
       "createdAt": "2026-11-29T16:00:00.000Z",
       "paidAt": "2026-11-29T16:05:00.000Z",
-      "confirmedAt": "2026-11-29T16:05:00.000Z"
+      "confirmedAt": "2026-11-29T16:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-019",
@@ -1953,7 +1976,8 @@
       "promoterId": "demo-club-promo-01",
       "createdAt": "2026-12-02T09:00:00.000Z",
       "paidAt": "2026-12-02T09:05:00.000Z",
-      "confirmedAt": "2026-12-02T09:05:00.000Z"
+      "confirmedAt": "2026-12-02T09:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-020",
@@ -1967,7 +1991,8 @@
       "depositCents": 5850,
       "createdAt": "2026-11-12T16:00:00.000Z",
       "paidAt": "2026-11-12T16:05:00.000Z",
-      "confirmedAt": "2026-11-12T16:05:00.000Z"
+      "confirmedAt": "2026-11-12T16:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-021",
@@ -1981,7 +2006,8 @@
       "depositCents": 4500,
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-16T04:00:00.000Z",
-      "paidAt": "2026-11-16T04:05:00.000Z"
+      "paidAt": "2026-11-16T04:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-022",
@@ -1995,7 +2021,8 @@
       "depositCents": 9750,
       "createdAt": "2026-11-15T02:00:00.000Z",
       "paidAt": "2026-11-15T02:05:00.000Z",
-      "confirmedAt": "2026-11-15T02:05:00.000Z"
+      "confirmedAt": "2026-11-15T02:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-023",
@@ -2009,7 +2036,9 @@
       "depositCents": 39000,
       "createdAt": "2026-11-19T17:00:00.000Z",
       "paidAt": "2026-11-19T17:05:00.000Z",
-      "confirmedAt": "2026-11-19T17:05:00.000Z"
+      "confirmedAt": "2026-11-19T17:05:00.000Z",
+      "noShowAt": "2026-11-21T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-024",
@@ -2024,7 +2053,8 @@
       "promoterId": "demo-club-promo-02",
       "createdAt": "2026-11-08T17:00:00.000Z",
       "paidAt": "2026-11-08T17:05:00.000Z",
-      "confirmedAt": "2026-11-08T17:05:00.000Z"
+      "confirmedAt": "2026-11-08T17:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-025",
@@ -2039,7 +2069,8 @@
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-23T17:00:00.000Z",
       "cancelledAt": "2026-11-23T17:05:00.000Z",
-      "cancelReason": "staff"
+      "cancelReason": "staff",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-026",
@@ -2054,7 +2085,8 @@
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-18T16:00:00.000Z",
       "paidAt": "2026-11-18T16:05:00.000Z",
-      "confirmedAt": "2026-11-18T16:05:00.000Z"
+      "confirmedAt": "2026-11-18T16:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-027",
@@ -2067,7 +2099,8 @@
       "minSpendCents": 50000,
       "depositCents": 15000,
       "createdAt": "2026-12-02T18:00:00.000Z",
-      "paidAt": "2026-12-02T18:05:00.000Z"
+      "paidAt": "2026-12-02T18:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-028",
@@ -2082,7 +2115,8 @@
       "promoterId": "demo-club-promo-01",
       "createdAt": "2026-11-16T08:00:00.000Z",
       "paidAt": "2026-11-16T08:05:00.000Z",
-      "confirmedAt": "2026-11-16T08:05:00.000Z"
+      "confirmedAt": "2026-11-16T08:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-029",
@@ -2095,7 +2129,8 @@
       "minSpendCents": 15000,
       "depositCents": 4500,
       "createdAt": "2026-11-07T05:00:00.000Z",
-      "holdExpiresAt": "2026-11-19T22:00:00.000Z"
+      "holdExpiresAt": "2026-11-19T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-030",
@@ -2108,7 +2143,8 @@
       "minSpendCents": 25000,
       "depositCents": 7500,
       "createdAt": "2026-12-03T10:00:00.000Z",
-      "paidAt": "2026-12-03T10:05:00.000Z"
+      "paidAt": "2026-12-03T10:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-031",
@@ -2123,7 +2159,8 @@
       "promoterId": "demo-club-promo-02",
       "createdAt": "2026-11-17T03:00:00.000Z",
       "paidAt": "2026-11-17T03:05:00.000Z",
-      "confirmedAt": "2026-11-17T03:05:00.000Z"
+      "confirmedAt": "2026-11-17T03:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-032",
@@ -2136,7 +2173,8 @@
       "minSpendCents": 30000,
       "depositCents": 9000,
       "createdAt": "2026-11-12T11:00:00.000Z",
-      "holdExpiresAt": "2026-11-19T22:00:00.000Z"
+      "holdExpiresAt": "2026-11-19T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-033",
@@ -2150,7 +2188,8 @@
       "depositCents": 4500,
       "createdAt": "2026-11-20T08:00:00.000Z",
       "paidAt": "2026-11-20T08:05:00.000Z",
-      "confirmedAt": "2026-11-20T08:05:00.000Z"
+      "confirmedAt": "2026-11-20T08:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-034",
@@ -2163,7 +2202,8 @@
       "minSpendCents": 120000,
       "depositCents": 36000,
       "createdAt": "2026-11-14T05:00:00.000Z",
-      "holdExpiresAt": "2026-11-28T22:00:00.000Z"
+      "holdExpiresAt": "2026-11-28T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-035",
@@ -2178,7 +2218,8 @@
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-29T11:00:00.000Z",
       "paidAt": "2026-11-29T11:05:00.000Z",
-      "confirmedAt": "2026-11-29T11:05:00.000Z"
+      "confirmedAt": "2026-11-29T11:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-036",
@@ -2192,7 +2233,8 @@
       "depositCents": 30000,
       "createdAt": "2026-11-19T19:00:00.000Z",
       "paidAt": "2026-11-19T19:05:00.000Z",
-      "confirmedAt": "2026-11-19T19:05:00.000Z"
+      "confirmedAt": "2026-11-19T19:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-037",
@@ -2207,7 +2249,8 @@
       "promoterId": "demo-club-promo-02",
       "createdAt": "2026-11-09T07:00:00.000Z",
       "paidAt": "2026-11-09T07:05:00.000Z",
-      "confirmedAt": "2026-11-09T07:05:00.000Z"
+      "confirmedAt": "2026-11-09T07:05:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-038",
@@ -2221,7 +2264,8 @@
       "depositCents": 4500,
       "promoterId": "demo-club-promo-01",
       "createdAt": "2026-11-07T22:00:00.000Z",
-      "holdExpiresAt": "2026-11-13T22:00:00.000Z"
+      "holdExpiresAt": "2026-11-13T22:00:00.000Z",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-039",
@@ -2235,7 +2279,8 @@
       "depositCents": 19500,
       "createdAt": "2026-12-01T14:00:00.000Z",
       "cancelledAt": "2026-12-01T14:05:00.000Z",
-      "cancelReason": "staff"
+      "cancelReason": "staff",
+      "source": "seed"
     },
     {
       "id": "demo-club-rsv-040",
@@ -2249,7 +2294,8 @@
       "depositCents": 4500,
       "promoterId": "demo-club-promo-03",
       "createdAt": "2026-11-11T01:00:00.000Z",
-      "holdExpiresAt": "2026-11-20T22:00:00.000Z"
+      "holdExpiresAt": "2026-11-20T22:00:00.000Z",
+      "source": "seed"
     }
   ],
   "promoters": [

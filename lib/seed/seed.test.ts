@@ -168,6 +168,9 @@ describe("buildVenueData (Demo Club)", () => {
           "confirmedAt",
           "cancelledAt",
           "cancelReason",
+          "checkedInAt",
+          "noShowAt",
+          "source",
         ]).toContain(key);
       }
     }
