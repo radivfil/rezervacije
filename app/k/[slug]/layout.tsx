@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: LayoutProps<"/k/[slug]">): Pr
   if (!venue) return {};
   const description = interpolate(messages.meta.venueDescription, { venue: venue.name });
   return {
-    title: venue.name,
+    title: { default: venue.name, template: `%s · ${venue.name}` },
     description,
     applicationName: venue.name,
     icons: { icon: venue.theme.logoUrl },

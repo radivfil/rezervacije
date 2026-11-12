@@ -4,7 +4,7 @@ import { connection } from "next/server";
 import { FloorplanSkeleton } from "@/components/floorplan/FloorplanSkeleton";
 import { FloorplanView } from "@/components/floorplan/FloorplanView";
 import { IsoDateSchema } from "@/lib/domain/schemas";
-import { DATE_PARAM } from "@/lib/floorplan/routes";
+import { DATE_PARAM } from "@/lib/routes";
 import { isoDateInTimeZone } from "@/lib/format";
 import { getFloorplan, getVenue } from "@/lib/services/venues";
 
@@ -38,6 +38,7 @@ async function VenueFloorplan({ slug, searchParams }: { slug: string; searchPara
   return (
     <FloorplanView
       venue={plan.venue}
+      bookingOpen={plan.bookingOpen}
       events={plan.events}
       event={plan.event}
       floors={plan.floors}

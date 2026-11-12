@@ -58,3 +58,23 @@ export function formatShortDate(isoDate: string): string {
 export function formatMultiplier(multiplier: number): string {
   return `×${multiplierFormatter.format(multiplier)}`;
 }
+
+/** Vrijeme početka termina u vremenskoj zoni kluba, npr. "23:00". */
+export function formatTime(isoDateTime: string, timeZone: string): string {
+  return new Intl.DateTimeFormat(LOCALE, { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone }).format(
+    new Date(isoDateTime),
+  );
+}
+
+/** Kod rezervacije u dvije skupine radi čitljivosti, npr. "ABCD 2345". */
+export function formatReservationCode(code: string): string {
+  return code.length === 8 ? `${code.slice(0, 4)} ${code.slice(4)}` : code;
+}
+
+/** Preostale minute i sekunde, npr. "9:05". */
+export function formatCountdown(milliseconds: number): string {
+  const totalSeconds = Math.max(0, Math.ceil(milliseconds / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}

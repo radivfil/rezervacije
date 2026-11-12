@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
+import Link from "next/link";
 import { AVAILABILITY_COLORS } from "@/lib/floorplan/colors";
 import type { TableDetails } from "@/lib/floorplan/table-details";
 import { formatEur, formatMultiplier } from "@/lib/format";
@@ -8,6 +9,8 @@ import { interpolate, messages } from "@/lib/i18n";
 
 interface TableSheetProps {
   details: TableDetails;
+  /** Poveznica na formu rezervacije; null ako se stol ne može rezervirati. */
+  bookHref: string | null;
   onClose: () => void;
 }
 
@@ -23,7 +26,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 }
 
 /** Donji panel s podacima stola. Nije modalan: tlocrt ostaje dostupan za odabir drugog stola. */
-export function TableSheet({ details, onClose }: TableSheetProps) {
+export function TableSheet({ details, bookHref, onClose }: TableSheetProps) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -40,6 +43,7 @@ export function TableSheet({ details, onClose }: TableSheetProps) {
   }, [onClose]);
 
   const { price } = details;
+  const unavailableMessage = details.bookingClosed ? t.bookingClosed : details.availability !== "free" ? t.notFree : null;
 
   return (
     <section
@@ -96,6 +100,17 @@ export function TableSheet({ details, onClose }: TableSheetProps) {
           <p className="py-2 opacity-70">{t.noPrice}</p>
         )}
       </dl>
+
+      {bookHref ? (
+        <Link
+          href={bookHref}
+          className="mt-3 flex min-h-12 w-full items-center justify-center rounded-xl bg-brand-primary px-4 text-base font-semibold text-brand-on-primary active:scale-[0.99]"
+        >
+          {t.book}
+        </Link>
+      ) : unavailableMessage ? (
+        <p className="mt-3 rounded-xl bg-brand-background/50 p-3 text-center text-sm opacity-80">{unavailableMessage}</p>
+      ) : null}
 
       <div className="mt-3 rounded-xl bg-brand-background/50 p-3 text-sm">
         <h3 className="mb-1 font-semibold">{t.termsTitle}</h3>

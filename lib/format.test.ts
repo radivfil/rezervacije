@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   formatEur,
+  formatCountdown,
   formatEventDate,
   formatMultiplier,
+  formatReservationCode,
+  formatTime,
   formatShortDate,
   formatShortWeekday,
   isoDateInTimeZone,
@@ -35,6 +38,22 @@ describe("kratki formati", () => {
   it("množitelj s decimalnim zarezom", () => {
     expect(formatMultiplier(1.3)).toBe("×1,3");
     expect(formatMultiplier(1)).toBe("×1");
+  });
+});
+
+describe("formati rezervacije", () => {
+  it("vrijeme po zoni kluba", () => {
+    expect(formatTime("2026-11-14T22:00:00.000Z", "Europe/Zagreb")).toBe("23:00");
+  });
+
+  it("kod u dvije skupine", () => {
+    expect(formatReservationCode("ABCD2345")).toBe("ABCD 2345");
+  });
+
+  it("odbrojavanje", () => {
+    expect(formatCountdown(600_000)).toBe("10:00");
+    expect(formatCountdown(65_400)).toBe("1:06");
+    expect(formatCountdown(-5)).toBe("0:00");
   });
 });
 

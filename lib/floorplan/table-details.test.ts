@@ -13,6 +13,7 @@ const base = {
   floors: data.floors,
   availability: { [platinum.id]: "held" as const },
   policy: data.venue.policy,
+  bookingOpen: true,
 };
 
 describe("buildTableDetails", () => {
@@ -39,6 +40,15 @@ describe("buildTableDetails", () => {
     const details = buildTableDetails({ ...base, availability: {}, event: null });
     expect(details.price).toBeNull();
     expect(details.availability).toBe("free");
+  });
+
+  it("rezervirati se može samo slobodan stol u otvorenom terminu", () => {
+    const event = { priceMultiplier: 1 };
+    expect(buildTableDetails({ ...base, event }).canBook).toBe(false); // držan
+    expect(buildTableDetails({ ...base, availability: {}, event }).canBook).toBe(true);
+    const closed = buildTableDetails({ ...base, availability: {}, event, bookingOpen: false });
+    expect(closed).toMatchObject({ canBook: false, bookingClosed: true });
+    expect(buildTableDetails({ ...base, availability: {}, event: null }).canBook).toBe(false);
   });
 
   it("baca grešku za stol bez zone", () => {

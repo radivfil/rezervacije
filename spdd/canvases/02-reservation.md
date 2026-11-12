@@ -1,5 +1,7 @@
 # Canvas 02: Rezervacija stola s akontacijom (demo placanje) i QR potvrda
 
+Status: implementirano (Operations 1-6), 2026-11-12.
+
 Izvor: spdd/stories/02-reservation.md, spdd/analysis/02-reservation.md (prijedlozi 1-8 prihvaceni 2026-11-12), canvas 01.
 
 ## R - Requirements
@@ -50,13 +52,16 @@ Kao canvas 01: TypeScript strict bez any, male komponente bez poslovne logike, d
 - Nikad dvije aktivne rezervacije za isti (stol, event).
 - Bez pravog placanja i bez unosa podataka kartice; demo placanje je jasno oznaceno.
 - Ime i mobitel gosta: samo u memoriji servera, ne logiraju se, ne salju se vanjskim servisima, ne pojavljuju se u URL-u.
-- Kod rezervacije nije pogodljiv (kriptografski slucajan); stranica rezervacije bez ispravnog koda vraca 404.
+- Kod rezervacije nije pogodljiv (kriptografski slucajan); stranica rezervacije bez ispravnog koda prikazuje "nije pronadena" s noindex (HTTP status je 200 jer se stranica streama - ponasanje Next.js 16, vidi odluke).
 - Nigdje naziv proizvoda (potvrda, QR, metapodaci).
 - Izvan opsega: otkazivanje od strane gosta, povrat akontacije, promo kodovi, admin i check-in (prica 03), e-mail/SMS.
 - Nista izvan Operations 1-6.
 
 ## Odluke za pregled
-- [ ] Event.startsAt 23:00 za sve seed termine.
-- [ ] Seed held = drzanje kluba/promotora do pocetka termina (pravilo 8), da demo ima zute stolove.
-- [ ] Forma na zasebnoj stranici /rezerviraj (ne u panelu) - jednostavnije na mobitelu i za Server Action.
-- [ ] QR sadrzi URL potvrde (ne samo kod).
+- [x] Event.startsAt 23:00 za sve seed termine.
+- [x] Seed held = drzanje kluba/promotora do pocetka termina (pravilo 8), da demo ima zute stolove.
+- [x] Forma na zasebnoj stranici /rezerviraj (ne u panelu) - jednostavnije na mobitelu i za Server Action.
+- [x] QR sadrzi URL potvrde (ne samo kod).
+
+## Odstupanja nakon implementacije (za odluku)
+- [ ] Nepostojeci kod: stranica "nije pronadena" + noindex, ali HTTP 200 umjesto 404 (Next.js 16 streaming). Pravi 404 bi trazio provjeru prije streama (npr. u proxyju) - predlazem ostaviti za demo.

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import type { Decoration, Event, Floor, Table, Venue, Zone } from "@/lib/domain/types";
 import type { TableAvailability } from "@/lib/domain/table-status";
 import { useFloorplanStore, floorplanStore } from "@/lib/floorplan/store";
-import { venueDateHref } from "@/lib/floorplan/routes";
+import { bookingHref, venueDateHref } from "@/lib/routes";
 import { buildTableDetails } from "@/lib/floorplan/table-details";
 import { messages } from "@/lib/i18n";
 import { DatePicker } from "../venue/DatePicker";
@@ -23,7 +23,8 @@ const FloorplanCanvas = dynamic(() => import("./FloorplanCanvas"), {
 });
 
 interface FloorplanViewProps {
-  venue: Pick<Venue, "theme" | "policy">;
+  venue: Pick<Venue, "slug" | "theme" | "policy">;
+  bookingOpen: boolean;
   events: readonly Event[];
   event: Event | null;
   floors: readonly Floor[];
@@ -35,6 +36,7 @@ interface FloorplanViewProps {
 
 export function FloorplanView({
   venue,
+  bookingOpen,
   events,
   event,
   floors,
@@ -57,8 +59,9 @@ export function FloorplanView({
   const zoneColors = useMemo(() => Object.fromEntries(zones.map((zone) => [zone.id, zone.color])), [zones]);
   const selectedTable = tables.find((table) => table.id === selectedTableId) ?? null;
   const details = selectedTable
-    ? buildTableDetails({ table: selectedTable, zones, floors, event, availability, policy: venue.policy })
+    ? buildTableDetails({ table: selectedTable, zones, floors, event, availability, policy: venue.policy, bookingOpen })
     : null;
+  const bookHref = details?.canBook && event ? bookingHref(venue.slug, details.tableId, event.date) : null;
 
   const selectDate = (date: string): void => {
     startTransition(() => {
@@ -90,7 +93,7 @@ export function FloorplanView({
       </div>
       <StatusLegend />
       <p className="text-xs opacity-60">{messages.floorplan.hint}</p>
-      {details ? <TableSheet details={details} onClose={close} /> : null}
+      {details ? <TableSheet details={details} bookHref={bookHref} onClose={close} /> : null}
     </section>
   );
 }
