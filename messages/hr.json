@@ -13,7 +13,12 @@
     "eventLabel": "Termin",
     "noEvents": "Trenutno nema dostupnih termina.",
     "dateLabel": "Odaberite datum",
-    "specialBadge": "Event"
+    "specialBadge": "Event",
+    "freeTables": "{count} slobodnih stolova",
+    "freeTablesShort": "{count} slobodno",
+    "startsAt": "od {time}",
+    "closed": "Rezervacije zatvorene",
+    "freeLabel": "slobodno"
   },
   "floorplan": {
     "floorsLabel": "Etaže",
@@ -22,14 +27,19 @@
     "zoomIn": "Približi",
     "zoomOut": "Udalji",
     "zoomReset": "Prikaži cijelu etažu",
-    "hint": "Povucite za pomicanje, raširite prste za zumiranje.",
+    "hint": "Dodirnite stol za cijenu. Raširite prste za zumiranje.",
     "legendLabel": "Legenda",
     "status": {
       "free": "Slobodan",
       "held": "Držan",
       "booked": "Zauzet"
     },
-    "tableLabel": "Stol {label}"
+    "tableLabel": "Stol {label}",
+    "zonesLabel": "Zone i minimalna potrošnja",
+    "zoneFree": "{free} slob.",
+    "tablesLabel": "Stolovi na etaži {floor}",
+    "tableOption": "Stol {label}, {zone}, {status}",
+    "keyboardHint": "Tipke plus i minus zumiraju, strelice pomiču tlocrt."
   },
   "notFound": {
     "title": "Stranica nije pronađena",
@@ -54,7 +64,12 @@
     "noPrice": "Za ovaj datum nema termina.",
     "book": "Rezerviraj",
     "notFree": "Stol nije slobodan za ovaj termin.",
-    "bookingClosed": "Rezervacije za ovaj termin su zatvorene."
+    "bookingClosed": "Rezervacije za ovaj termin su zatvorene.",
+    "payNow": "Sada",
+    "payAtVenue": "U klubu",
+    "splitLabel": "Akontacija {percent} % sada, ostatak u klubu",
+    "bookAmount": "Rezerviraj uz {amount}",
+    "seats": "do {count} osoba"
   },
   "booking": {
     "title": "Rezervacija stola {label}",
@@ -82,7 +97,16 @@
       "party_too_large": "Broj osoba je veći od kapaciteta stola.",
       "not_found": "Stol ili termin nije pronađen.",
       "generic": "Nešto nije u redu. Pokušajte ponovno."
-    }
+    },
+    "steps": {
+      "table": "Stol",
+      "details": "Podaci",
+      "payment": "Akontacija",
+      "ticket": "Potvrda"
+    },
+    "stepsLabel": "Koraci rezervacije",
+    "detailsTitle": "Vaši podaci",
+    "people": "{count} osoba"
   },
   "reservation": {
     "metaTitle": "Rezervacija",
@@ -115,7 +139,16 @@
     "expiredBody": "Stol je ponovno slobodan. Možete ga pokušati rezervirati ponovno.",
     "cancelledTitle": "Rezervacija je otkazana",
     "cancelledBody": "Ova rezervacija više nije aktivna.",
-    "backToFloorplan": "Natrag na tlocrt"
+    "backToFloorplan": "Natrag na tlocrt",
+    "addToCalendar": "Dodaj u kalendar",
+    "share": "Podijeli s društvom",
+    "linkCopied": "Poveznica je kopirana",
+    "shareText": "{venue}: stol {label}, {date}",
+    "calendarTitle": "{event}: stol {label}",
+    "calendarDescription": "Kod rezervacije: {code}\nStol {label}, {zone}, {floor}\nBroj osoba: {count}",
+    "calendarFile": "rezervacija-{code}.ics",
+    "admitLabel": "Ulaznica za stol",
+    "urgent": "Još malo vremena"
   },
   "admin": {
     "metaTitle": "Osoblje",
@@ -200,6 +233,10 @@
       "errors": {
         "kind": "Odaberite vrstu rezervacije."
       }
-    }
+    },
+    "searchLabel": "Pretraži popis",
+    "searchPlaceholder": "Ime gosta ili stol",
+    "searchEmpty": "Nema rezervacija za taj upit.",
+    "people": "{count} os."
   }
 }

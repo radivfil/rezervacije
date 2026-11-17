@@ -8,7 +8,7 @@ import { FloorplanBoard } from "./FloorplanBoard";
 import { TableSheet } from "./TableSheet";
 
 interface FloorplanViewProps {
-  venue: Pick<PublicVenue, "slug" | "theme" | "policy">;
+  venue: Pick<PublicVenue, "slug" | "theme" | "policy" | "timezone">;
   bookingOpen: boolean;
   events: readonly Event[];
   event: Event | null;
@@ -24,7 +24,9 @@ export function FloorplanView({ venue, bookingOpen, ...board }: FloorplanViewPro
   return (
     <FloorplanBoard
       {...board}
+      bookingOpen={bookingOpen}
       theme={venue.theme}
+      timezone={venue.timezone}
       renderSheet={(table, close) => {
         const details = buildTableDetails({
           table,

@@ -10,9 +10,14 @@ import { DetailRows, type DetailRow } from "@/components/reservation/DetailRows"
 import { HoldCountdown } from "@/components/reservation/HoldCountdown";
 import { Notice } from "@/components/reservation/Notice";
 import { PageSkeleton } from "@/components/reservation/PageSkeleton";
+import { PriceSplit } from "@/components/reservation/PriceSplit";
+import { Steps } from "@/components/reservation/Steps";
+import { Ticket } from "@/components/reservation/Ticket";
+import { TicketActions } from "@/components/reservation/TicketActions";
 import { ReservationCodeSchema } from "@/lib/domain/schemas";
-import { formatEur, formatEventDate, formatReservationCode, formatTime } from "@/lib/format";
+import { formatDateBesideName, formatEur, formatEventDate, formatReservationCode, formatTime } from "@/lib/format";
 import { interpolate, messages } from "@/lib/i18n";
+import { icsDataUri } from "@/lib/reservations/calendar";
 import { qrSvg } from "@/lib/reservations/qr";
 import { remainingCents } from "@/lib/reservations/rules";
 import { absoluteUrl, reservationHref, venueDateHref, venueHref } from "@/lib/routes";
@@ -26,7 +31,7 @@ const t = messages.reservation;
 
 export default function ReservationPage({ params }: PageProps<"/k/[slug]/r/[code]">) {
   return (
-    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-4 px-4 pb-8">
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 px-4 pt-2 pb-10">
       <Suspense fallback={<PageSkeleton />}>
         <ReservationContent params={params} />
       </Suspense>
@@ -62,7 +67,7 @@ async function guestContent(view: ReservationView, slug: string) {
     case "confirmed":
     case "checked_in": {
       const url = absoluteUrl(await headers(), reservationHref(slug, reservation.code));
-      return <ConfirmedReservation view={view} qr={await qrSvg(url)} backHref={backHref} />;
+      return <ConfirmedReservation view={view} qr={await qrSvg(url)} url={url} backHref={backHref} />;
     }
     default:
       return reservation.cancelReason === "hold_expired" ? (
@@ -89,81 +94,142 @@ function HeldReservation({ view, slug }: { view: ReservationView; slug: string }
   if (!reservation.holdExpiresAt) return null;
   return (
     <>
-      <section className="flex flex-col gap-3 rounded-2xl bg-brand-surface p-5">
-        <h1 className="text-xl font-semibold">{interpolate(t.heldTitle, { label: view.table.label })}</h1>
-        <p className="text-sm opacity-80">{t.heldBody}</p>
+      <Steps current="payment" />
+      <header className="animate-rise">
+        <h1 className="display text-[clamp(1.875rem,8vw,2.75rem)]">{interpolate(t.heldTitle, { label: view.table.label })}</h1>
+        <p className="mt-2 text-muted">{t.heldBody}</p>
+      </header>
+      <section className="border-y border-line py-5">
         <HoldCountdown expiresAt={reservation.holdExpiresAt} totalMinutes={venue.policy.holdMinutes} />
       </section>
-      <section className="rounded-2xl bg-brand-surface px-4 py-2">
-        <DetailRows
-          rows={[
-            ...summaryRows(view),
-            { label: t.minSpend, value: formatEur(reservation.minSpendCents) },
-            { label: t.deposit, value: formatEur(reservation.depositCents), emphasis: true },
-            { label: t.remaining, value: formatEur(remainingCents(reservation)) },
-          ]}
+      <section>
+        <PriceSplit
+          minSpendCents={reservation.minSpendCents}
+          depositCents={reservation.depositCents}
+          remainingCents={remainingCents(reservation)}
         />
       </section>
-      <section className="flex flex-col gap-2 rounded-2xl bg-brand-surface p-4">
+      <section className="flex flex-col gap-1">
         <DemoPaymentForm
           action={payReservationAction.bind(null, slug, reservation.code)}
           amountLabel={formatEur(reservation.depositCents)}
         />
-        <form action={abandonReservationAction.bind(null, slug, reservation.code, event.date)}>
-          <button type="submit" className="min-h-11 w-full rounded-xl px-4 text-sm opacity-70">
+        <form action={abandonReservationAction.bind(null, slug, reservation.code, event.date)} className="flex">
+          <button type="submit" className="btn btn-quiet flex-1">
             {t.abandon}
           </button>
         </form>
+      </section>
+      <section className="border-t border-line pt-2">
+        <DetailRows rows={summaryRows(view)} />
       </section>
     </>
   );
 }
 
-function ConfirmedReservation({ view, qr, backHref }: { view: ReservationView; qr: string; backHref: string }) {
-  const { reservation, venue } = view;
+/** Trajanje zapisa u kalendaru; termin nema definiran kraj. */
+const CALENDAR_HOURS = 5;
+
+function ConfirmedReservation({ view, qr, url, backHref }: { view: ReservationView; qr: string; url: string; backHref: string }) {
+  const { reservation, venue, event, table, zone, floor } = view;
   const tableSheet = messages.tableSheet;
+  const code = formatReservationCode(reservation.code);
+  const calendarHref = icsDataUri({
+    uid: `${reservation.code}@${venue.slug}`,
+    title: interpolate(t.calendarTitle, { event: event.name, label: table.label }),
+    location: venue.name,
+    description: interpolate(t.calendarDescription, {
+      code,
+      label: table.label,
+      zone: zone.name,
+      floor: floor.name,
+      count: reservation.partySize,
+    }),
+    startsAt: event.startsAt,
+    durationHours: CALENDAR_HOURS,
+    createdAt: reservation.createdAt,
+    url,
+  });
   return (
     <>
-      <section className="flex flex-col items-center gap-3 rounded-2xl bg-brand-surface p-5 text-center">
-        <h1 className="text-xl font-semibold">{t.confirmedTitle}</h1>
-        <p className="text-sm opacity-80">{t.confirmedBody}</p>
-        <div
-          role="img"
-          aria-label={interpolate(t.qrAlt, { code: reservation.code })}
-          className="w-56 max-w-full rounded-xl bg-white p-3 [&>svg]:h-auto [&>svg]:w-full"
-          dangerouslySetInnerHTML={{ __html: qr }}
-        />
-        <p className="text-xs uppercase tracking-wide opacity-70">{t.code}</p>
-        <p className="font-mono text-3xl font-bold tracking-widest">{formatReservationCode(reservation.code)}</p>
-        {reservation.checkedInAt ? (
-          <p className="rounded-full bg-green-500/20 px-3 py-1 text-sm font-semibold">
-            {interpolate(messages.admin.checkedInAt, { time: formatTime(reservation.checkedInAt, venue.timezone) })}
+      <Steps current="ticket" />
+      <header className="animate-rise">
+        <h1 className="display text-[clamp(1.875rem,8vw,2.75rem)]">{t.confirmedTitle}</h1>
+        <p className="mt-2 text-muted">{t.confirmedBody}</p>
+      </header>
+
+      <Ticket
+        stub={
+          <div className="flex items-center gap-4">
+            <div
+              role="img"
+              aria-label={interpolate(t.qrAlt, { code: reservation.code })}
+              className="w-32 shrink-0 [&>svg]:h-auto [&>svg]:w-full"
+              dangerouslySetInnerHTML={{ __html: qr }}
+            />
+            <div className="min-w-0">
+              <p className="eyebrow">{t.code}</p>
+              <p className="mt-1 font-mono text-[1.375rem] leading-tight font-semibold tracking-[0.08em]">{code}</p>
+              {reservation.checkedInAt ? (
+                <p className="mt-2 inline-block rounded-full bg-[#1a9f5c]/15 px-2.5 py-1 text-xs font-semibold text-[#126e40]">
+                  {interpolate(messages.admin.checkedInAt, { time: formatTime(reservation.checkedInAt, venue.timezone) })}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        }
+      >
+        <p className="eyebrow">{venue.name}</p>
+        <p className="display mt-2 text-[1.625rem]">{event.name}</p>
+        <p className="mt-1 text-sm text-[#6b6a72]">
+          {formatDateBesideName(event.name, event.date)} · {interpolate(messages.venue.startsAt, { time: formatTime(event.startsAt, venue.timezone) })}
+        </p>
+        <dl className="mt-5 grid grid-cols-3 gap-3 border-t border-[rgba(22,21,26,0.14)] pt-4">
+          <div>
+            <dt className="eyebrow">{t.table}</dt>
+            <dd className="display mt-1 text-[1.75rem]">{table.label}</dd>
+          </div>
+          <div>
+            <dt className="eyebrow">{t.zone}</dt>
+            <dd className="mt-1.5 font-semibold">{zone.name}</dd>
+            <dd className="text-xs text-[#6b6a72]">{floor.name}</dd>
+          </div>
+          <div>
+            <dt className="eyebrow">{t.partySize}</dt>
+            <dd className="display mt-1 text-[1.75rem] tabular-nums">{reservation.partySize}</dd>
+          </div>
+        </dl>
+        {reservation.guestName ? (
+          <p className="mt-4 text-sm">
+            <span className="text-[#6b6a72]">{t.guest}</span> <span className="font-semibold">{reservation.guestName}</span>
           </p>
         ) : null}
-      </section>
-      <section className="rounded-2xl bg-brand-surface px-4 py-2">
-        <DetailRows
-          rows={[
-            { label: t.venue, value: venue.name },
-            ...summaryRows(view),
-            ...(reservation.guestName ? [{ label: t.guest, value: reservation.guestName }] : []),
-            { label: t.minSpend, value: formatEur(reservation.minSpendCents) },
-            { label: t.depositPaid, value: formatEur(reservation.depositCents), emphasis: true },
-            { label: t.remaining, value: formatEur(remainingCents(reservation)), emphasis: true },
-          ]}
+      </Ticket>
+
+      <TicketActions
+        calendarHref={calendarHref}
+        calendarFile={interpolate(t.calendarFile, { code: reservation.code })}
+        shareTitle={venue.name}
+        shareText={interpolate(t.shareText, { venue: venue.name, label: table.label, date: formatEventDate(event.date) })}
+        shareUrl={url}
+      />
+
+      <section className="border-y border-line py-5">
+        <PriceSplit
+          minSpendCents={reservation.minSpendCents}
+          depositCents={reservation.depositCents}
+          remainingCents={remainingCents(reservation)}
+          paid
         />
       </section>
-      <section className="rounded-2xl bg-brand-surface p-4 text-sm">
-        <h2 className="mb-1 font-semibold">{tableSheet.termsTitle}</h2>
-        <ul className="list-disc space-y-1 pl-5 opacity-90">
+      <section className="text-sm text-muted">
+        <h2 className="eyebrow mb-2">{tableSheet.termsTitle}</h2>
+        <ul className="space-y-1.5">
           <li>{tableSheet.termsDepositCounts}</li>
           <li>{interpolate(tableSheet.termsCancellation, { hours: venue.policy.freeCancellationHours })}</li>
         </ul>
       </section>
-      <Link
-        href={backHref}
-        className="flex min-h-12 items-center justify-center rounded-xl bg-brand-surface px-4 font-semibold"
-      >
+      <Link href={backHref} className="btn btn-quiet">
         {t.backToFloorplan}
       </Link>
     </>

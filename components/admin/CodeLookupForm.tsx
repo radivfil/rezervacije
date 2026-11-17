@@ -11,7 +11,7 @@ export function CodeLookupForm({ slug }: { slug: string }) {
   const [state, formAction, pending] = useActionState(lookupCodeAction.bind(null, slug), INITIAL_CODE_LOOKUP_STATE);
   return (
     <form action={formAction} className="flex flex-col gap-1">
-      <label htmlFor="staff-code" className="text-sm font-medium">
+      <label htmlFor="staff-code" className="eyebrow mb-1">
         {t.codeLabel}
       </label>
       <div className="flex gap-2">
@@ -21,18 +21,18 @@ export function CodeLookupForm({ slug }: { slug: string }) {
           autoCapitalize="characters"
           autoComplete="off"
           placeholder={t.codePlaceholder}
-          className="min-h-12 flex-1 rounded-xl border border-brand-text/20 bg-brand-background px-3 font-mono text-lg uppercase text-brand-text outline-none focus:border-brand-primary"
+          className="field flex-1 font-mono text-lg tracking-[0.08em] uppercase placeholder:tracking-normal placeholder:normal-case"
         />
         <button
           type="submit"
           disabled={pending}
-          className="min-h-12 rounded-xl bg-brand-primary px-5 font-semibold text-brand-on-primary disabled:opacity-60"
+          className="btn btn-primary"
         >
           {t.codeSubmit}
         </button>
       </div>
       {state.error ? (
-        <p role="alert" className="text-sm text-red-500">
+        <p role="alert" className="mt-1 text-sm text-booked">
           {t.codeNotFound}
         </p>
       ) : null}

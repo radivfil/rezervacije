@@ -22,6 +22,13 @@ export function formatEur(cents: number): string {
   return eurFormatter.format(cents / 100);
 }
 
+const eurWholeFormatter = new Intl.NumberFormat(LOCALE, { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+
+/** Kratki iznos za uske prikaze: cijeli euri bez decimala ("90 €"), inače puni zapis. */
+export function formatEurCompact(cents: number): string {
+  return cents % 100 === 0 ? eurWholeFormatter.format(cents / 100) : eurFormatter.format(cents / 100);
+}
+
 /** Kalendarski datum (YYYY-MM-DD) trenutka `date` u vremenskoj zoni kluba. */
 export function isoDateInTimeZone(date: Date, timeZone: string): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
@@ -52,6 +59,35 @@ export function formatShortWeekday(isoDate: string): string {
 /** Kratki datum, npr. "12. 11." */
 export function formatShortDate(isoDate: string): string {
   return shortDateFormatter.format(parseIsoDate(isoDate));
+}
+
+const dayFormatter = new Intl.DateTimeFormat(LOCALE, { day: "numeric", timeZone: "UTC" });
+const shortMonthFormatter = new Intl.DateTimeFormat(LOCALE, { month: "short", timeZone: "UTC" });
+const dayMonthFormatter = new Intl.DateTimeFormat(LOCALE, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+
+/** Dan u mjesecu bez točke, npr. "19". */
+export function formatDayNumber(isoDate: string): string {
+  return dayFormatter.format(parseIsoDate(isoDate)).replace(/\.$/, "");
+}
+
+/** Kratki mjesec bez točke, npr. "stu". */
+export function formatShortMonth(isoDate: string): string {
+  return shortMonthFormatter.format(parseIsoDate(isoDate)).replace(/\.$/, "");
+}
+
+/** Datum bez godine, npr. "četvrtak, 19. studenoga". */
+export function formatDayMonth(isoDate: string): string {
+  return dayMonthFormatter.format(parseIsoDate(isoDate));
+}
+
+/**
+ * Datum uz ime termina, bez ponavljanja dana: obični termini zovu se po danu ("Četvrtak"),
+ * pa uz njih ide samo "19. studenoga", a uz posebne "subota, 28. studenoga".
+ */
+export function formatDateBesideName(eventName: string, isoDate: string): string {
+  const full = formatDayMonth(isoDate);
+  const [weekday, ...rest] = full.split(", ");
+  return rest.length > 0 && weekday?.toLowerCase() === eventName.trim().toLowerCase() ? rest.join(", ") : full;
 }
 
 /** Množitelj cijene, npr. "×1,3". */

@@ -1,12 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Venue } from "@/lib/domain/types";
 import { interpolate, messages } from "@/lib/i18n";
+import { venueHref } from "@/lib/routes";
 
-export function VenueHeader({ venue }: { venue: Pick<Venue, "name" | "theme"> }) {
+export function VenueHeader({ venue }: { venue: Pick<Venue, "name" | "slug" | "theme"> }) {
   return (
-    <header className="sticky top-0 z-10 bg-brand-background/95 px-4 py-3 backdrop-blur">
-      <div className="mx-auto flex max-w-3xl items-center">
-        <h1 className="sr-only">{venue.name}</h1>
+    <header className="px-4 pt-3 pb-1 lg:px-8 lg:pt-5">
+      <h1 className="sr-only">{venue.name}</h1>
+      <Link href={venueHref(venue.slug)} className="inline-flex min-h-11 items-center rounded-ctl">
         <Image
           src={venue.theme.logoUrl}
           alt={interpolate(messages.venue.logoAlt, { venue: venue.name })}
@@ -14,9 +16,9 @@ export function VenueHeader({ venue }: { venue: Pick<Venue, "name" | "theme"> })
           height={60}
           priority
           unoptimized
-          className="h-11 w-auto"
+          className="h-9 w-auto"
         />
-      </div>
+      </Link>
     </header>
   );
 }

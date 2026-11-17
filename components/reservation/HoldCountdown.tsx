@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { formatCountdown } from "@/lib/format";
 import { messages } from "@/lib/i18n";
 
+const URGENT_MS = 120_000;
+
 function subscribe(onTick: () => void): () => void {
   const timer = setInterval(onTick, 1000);
   return () => clearInterval(timer);
@@ -24,6 +26,7 @@ export function HoldCountdown({ expiresAt, totalMinutes }: { expiresAt: string; 
   const nowSeconds = useNowSeconds();
   const remaining = nowSeconds === null ? null : Date.parse(expiresAt) - nowSeconds * 1000;
   const expired = remaining !== null && remaining <= 0;
+  const urgent = remaining !== null && remaining <= URGENT_MS;
   const progress = remaining === null ? 1 : Math.max(0, Math.min(1, remaining / (totalMinutes * 60_000)));
 
   useEffect(() => {
@@ -31,15 +34,18 @@ export function HoldCountdown({ expiresAt, totalMinutes }: { expiresAt: string; 
   }, [expired, router]);
 
   return (
-    <div className="flex flex-col gap-2" role="timer" aria-live="off">
-      <div className="flex items-baseline justify-between">
-        <span className="text-sm opacity-70">{messages.reservation.timeLeft}</span>
-        <span className="font-mono text-3xl font-semibold tabular-nums">
+    <div role="timer" aria-live="off">
+      <div className="flex items-end justify-between gap-4">
+        <span className="eyebrow pb-1.5">{urgent ? messages.reservation.urgent : messages.reservation.timeLeft}</span>
+        <span className={`font-mono text-[3.25rem] leading-none font-semibold tabular-nums ${urgent ? "text-booked" : ""}`}>
           {remaining === null ? "–:––" : formatCountdown(remaining)}
         </span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-brand-background">
-        <div className="h-full rounded-full bg-brand-primary transition-[width] duration-1000" style={{ width: `${progress * 100}%` }} />
+      <div className="mt-3 h-1 overflow-hidden rounded-full bg-brand-text/12">
+        <div
+          className={`h-full origin-left transition-transform duration-1000 ease-linear ${urgent ? "bg-booked" : "bg-brand-primary"}`}
+          style={{ transform: `scaleX(${progress})` }}
+        />
       </div>
     </div>
   );

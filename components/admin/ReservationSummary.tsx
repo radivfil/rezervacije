@@ -16,7 +16,7 @@ export function StaffReservationDetails({ reservation }: { reservation: Reservat
               {
                 label: messages.booking.guestPhone,
                 value: (
-                  <a href={`tel:${reservation.guestPhone}`} className="underline">
+                  <a href={`tel:${reservation.guestPhone}`} className="underline decoration-line-strong underline-offset-4">
                     {reservation.guestPhone}
                   </a>
                 ),

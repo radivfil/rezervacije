@@ -3,12 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
-import { DetailRows } from "@/components/reservation/DetailRows";
 import { Notice } from "@/components/reservation/Notice";
 import { PageSkeleton } from "@/components/reservation/PageSkeleton";
+import { PriceSplit } from "@/components/reservation/PriceSplit";
 import { ReservationForm } from "@/components/reservation/ReservationForm";
+import { Steps } from "@/components/reservation/Steps";
+import { ZoneMark } from "@/components/floorplan/TableSheet";
 import { IdSchema, IsoDateSchema } from "@/lib/domain/schemas";
-import { formatEur, formatEventDate } from "@/lib/format";
+import { formatDateBesideName, formatMultiplier, formatTime } from "@/lib/format";
 import { interpolate, messages } from "@/lib/i18n";
 import { DATE_PARAM, TABLE_PARAM, venueDateHref, venueHref } from "@/lib/routes";
 import { getBookingContext } from "@/lib/services/venues";
@@ -22,7 +24,7 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export default function BookingPage({ params, searchParams }: PageProps<"/k/[slug]/rezerviraj">) {
   return (
-    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-4 px-4 pb-8">
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-6 px-4 pt-2 pb-10 lg:max-w-4xl lg:px-8">
       <Suspense fallback={<PageSkeleton />}>
         <BookingContent params={params} searchParams={searchParams} />
       </Suspense>
@@ -56,35 +58,48 @@ async function BookingContent({ params, searchParams }: { params: Promise<{ slug
   const { price } = context;
   return (
     <>
-      <Link href={backHref} className="flex min-h-11 items-center text-sm underline opacity-80">
-        ← {t.back}
+      <Link href={backHref} className="btn btn-quiet -mb-3 w-fit justify-start no-underline">
+        <span aria-hidden>←</span> {t.back}
       </Link>
-      <h1 className="text-2xl font-semibold">{interpolate(t.title, { label: context.table.label })}</h1>
-      <section className="rounded-2xl bg-brand-surface px-4 py-2">
-        <h2 className="sr-only">{t.summaryTitle}</h2>
-        <DetailRows
-          rows={[
-            { label: t.event, value: `${context.event.name} · ${formatEventDate(context.event.date)}` },
-            { label: t.table, value: `${context.table.label} · ${context.zone.name} · ${context.floor.name}` },
-            { label: messages.tableSheet.minSpend, value: formatEur(price.minSpendCents) },
-            {
-              label: interpolate(messages.tableSheet.deposit, { percent: price.depositPercent }),
-              value: formatEur(price.depositCents),
-              emphasis: true,
-            },
-            { label: messages.tableSheet.remaining, value: formatEur(price.remainingCents) },
-          ]}
-        />
-      </section>
-      <section className="rounded-2xl bg-brand-surface p-4">
-        <ReservationForm
-          action={createReservationAction.bind(null, slug)}
-          tableId={context.table.id}
-          date={context.event.date}
-          capacity={context.table.capacity}
-          holdMinutes={context.venue.policy.holdMinutes}
-        />
-      </section>
+      <Steps current="details" />
+      <div className="grid animate-rise gap-8 lg:grid-cols-[1fr_22rem] lg:gap-12">
+        <header className="lg:col-span-2">
+          <p className="eyebrow mb-2 flex items-center gap-2">
+            <ZoneMark color={context.zone.color} />
+            {context.zone.name} · {context.floor.name}
+          </p>
+          <h1 className="display text-[clamp(2rem,9vw,3rem)]">{interpolate(messages.tableSheet.title, { label: context.table.label })}</h1>
+          <p className="mt-2 text-muted">
+            {context.event.name} · {formatDateBesideName(context.event.name, context.event.date)} ·{" "}
+            {interpolate(messages.venue.startsAt, { time: formatTime(context.event.startsAt, context.venue.timezone) })}
+          </p>
+        </header>
+        <section aria-label={t.summaryTitle} className="border-y border-line py-5 lg:order-2 lg:self-start">
+          <PriceSplit
+            minSpendCents={price.minSpendCents}
+            depositCents={price.depositCents}
+            remainingCents={price.remainingCents}
+            note={
+              price.multiplier === 1
+                ? undefined
+                : interpolate(messages.tableSheet.multiplier, { multiplier: formatMultiplier(price.multiplier) })
+            }
+          />
+          <p className="mt-4 text-sm text-muted">{messages.tableSheet.termsDepositCounts}</p>
+        </section>
+        <section aria-labelledby="details-title">
+          <h2 id="details-title" className="sr-only">
+            {t.detailsTitle}
+          </h2>
+          <ReservationForm
+            action={createReservationAction.bind(null, slug)}
+            tableId={context.table.id}
+            date={context.event.date}
+            capacity={context.table.capacity}
+            holdMinutes={context.venue.policy.holdMinutes}
+          />
+        </section>
+      </div>
     </>
   );
 }

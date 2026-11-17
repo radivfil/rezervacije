@@ -19,4 +19,15 @@ describe("floorplan store", () => {
     store.getState().reset();
     expect(store.getState().activeFloorId).toBeNull();
   });
+
+  it("toggleZone ističe zonu, ponovni dodir i promjena etaže je gase", () => {
+    const store = createFloorplanStore();
+    store.getState().toggleZone("vip");
+    expect(store.getState().highlightZoneId).toBe("vip");
+    store.getState().toggleZone("vip");
+    expect(store.getState().highlightZoneId).toBeNull();
+    store.getState().toggleZone("vip");
+    store.getState().setFloor("kat");
+    expect(store.getState().highlightZoneId).toBeNull();
+  });
 });

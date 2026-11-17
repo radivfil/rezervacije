@@ -10,20 +10,20 @@ import { getFloorplan, getVenue } from "@/lib/services/venues";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-export default async function VenuePage({ params, searchParams }: PageProps<"/k/[slug]">) {
-  const { slug } = await params;
+export default function VenuePage({ params, searchParams }: PageProps<"/k/[slug]">) {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 pb-6">
+    <main className="flex min-h-0 flex-1 flex-col">
       <Suspense fallback={<FloorplanSkeleton />}>
-        <VenueFloorplan slug={slug} searchParams={searchParams} />
+        <VenueFloorplan params={params} searchParams={searchParams} />
       </Suspense>
     </main>
   );
 }
 
 /** Ovisi o današnjem datumu i ?datum=, pa se renderira po zahtjevu. */
-async function VenueFloorplan({ slug, searchParams }: { slug: string; searchParams: SearchParams }) {
+async function VenueFloorplan({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: SearchParams }) {
   await connection();
+  const { slug } = await params;
   const venue = await getVenue(slug);
   if (!venue) notFound();
 

@@ -2,13 +2,24 @@
 
 /* Neutralne vrijednosti; svaki klub ih prepisuje u app/k/[slug]/layout.tsx. */
 :root {
-  --brand-primary: #4b5563;
-  --brand-accent: #9ca3af;
-  --brand-background: #ffffff;
-  --brand-surface: #f3f4f6;
-  --brand-text: #111827;
+  --brand-primary: #3f3f46;
+  --brand-accent: #71717a;
+  --brand-background: #fafaf9;
+  --brand-surface: #ffffff;
+  --brand-text: #18181b;
   --brand-on-primary: #ffffff;
-  --brand-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --brand-on-accent: #ffffff;
+  --brand-font: var(--font-archivo), system-ui, sans-serif;
+  --brand-body: var(--font-archivo), system-ui, sans-serif;
+  --brand-display-weight: 700;
+  --brand-display-stretch: 100%;
+  --brand-display-transform: none;
+  --brand-display-tracking: -0.01em;
+  --brand-display-style: normal;
+  --status-free: #1a9f5c;
+  --status-held: #d98a00;
+  --status-booked: #d93a45;
+  --brand-scheme: light;
 }
 
 @theme inline {
@@ -18,11 +29,163 @@
   --color-brand-surface: var(--brand-surface);
   --color-brand-text: var(--brand-text);
   --color-brand-on-primary: var(--brand-on-primary);
-  --font-brand: var(--brand-font);
+  --color-brand-on-accent: var(--brand-on-accent);
+  --color-muted: color-mix(in oklab, var(--brand-text) 64%, var(--brand-background));
+  --color-line: color-mix(in oklab, var(--brand-text) 13%, transparent);
+  --color-line-strong: color-mix(in oklab, var(--brand-text) 30%, transparent);
+  --color-free: var(--status-free);
+  --color-held: var(--status-held);
+  --color-booked: var(--status-booked);
+  --font-brand: var(--brand-body);
+  --font-display: var(--brand-font);
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-ctl: 8px;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-sheet-up: sheet-up 0.34s var(--ease-out-quint);
+  --animate-panel-in: panel-in 0.28s var(--ease-out-quint);
+  --animate-rise: rise 0.5s var(--ease-out-quint) both;
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 
 body {
   background: var(--brand-background);
   color: var(--brand-text);
-  font-family: var(--brand-font);
+  font-family: var(--brand-body);
+}
+
+@layer components {
+  /* Naslovi u fontu kluba. */
+  .display {
+    font-family: var(--brand-font);
+    font-weight: var(--brand-display-weight);
+    font-stretch: var(--brand-display-stretch);
+    font-style: var(--brand-display-style);
+    text-transform: var(--brand-display-transform);
+    letter-spacing: var(--brand-display-tracking);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  /* Mali natpis iznad vrijednosti. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .btn {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-ctl);
+    padding: 0 1.125rem;
+    font-weight: 650;
+    letter-spacing: 0.005em;
+    transition:
+      transform 0.12s ease,
+      filter 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+  }
+  .btn-primary {
+    background: var(--brand-primary);
+    color: var(--brand-on-primary);
+  }
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+  .btn-outline {
+    border: 1px solid var(--color-line-strong);
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--brand-text);
+  }
+  .btn-quiet {
+    min-height: 2.75rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 4px;
+  }
+  .btn-quiet:hover:not(:disabled) {
+    color: var(--brand-text);
+  }
+  .field {
+    min-height: 3rem;
+    width: 100%;
+    border-radius: var(--radius-ctl);
+    border: 1px solid var(--color-line-strong);
+    background: color-mix(in oklab, var(--brand-text) 4%, var(--brand-background));
+    padding: 0 0.875rem;
+    font-size: 1rem;
+    color: var(--brand-text);
+    outline: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .field::placeholder {
+    color: color-mix(in oklab, var(--brand-text) 38%, transparent);
+  }
+  .field:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-primary) 30%, transparent);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--status-booked);
+  }
+  .note {
+    border-radius: var(--radius-ctl);
+    border-left: 3px solid var(--note-color, var(--color-line-strong));
+    background: color-mix(in oklab, var(--note-color, var(--brand-text)) 10%, transparent);
+    padding: 0.75rem 0.875rem;
+    font-size: 0.875rem;
+  }
+  .note-danger {
+    --note-color: var(--status-booked);
+  }
+  .note-ok {
+    --note-color: var(--status-free);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

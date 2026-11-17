@@ -25,7 +25,7 @@ export const DEMO_CLUB: VenueSeedConfig = {
         surface: "#17152a",
         text: "#f5f3ff",
       },
-      fontFamily: "Inter",
+      fontFamily: "Archivo",
     },
     policy: { freeCancellationHours: 48, holdMinutes: 10 },
     // Demo PIN osoblja: 1234 (vidi README).

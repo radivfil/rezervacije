@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   formatEur,
+  formatEurCompact,
+  formatDayMonth,
+  formatDateBesideName,
+  formatDayNumber,
+  formatShortMonth,
   formatCountdown,
   formatEventDate,
   formatMultiplier,
@@ -15,6 +20,23 @@ import { interpolate, messages } from "./i18n";
 const normalize = (value: string): string => value.replace(/\s/g, " ");
 
 describe("format (hr-HR)", () => {
+  it("kratki iznos izostavlja decimale samo za cijele eure", () => {
+    expect(normalize(formatEurCompact(9000))).toBe("90 €");
+    expect(normalize(formatEurCompact(104000))).toBe("1.040 €");
+    expect(normalize(formatEurCompact(5450))).toBe("54,50 €");
+  });
+
+  it("datum uz ime termina ne ponavlja dan", () => {
+    expect(formatDateBesideName("Četvrtak", "2026-11-19")).toBe("19. studenoga");
+    expect(formatDateBesideName("Glow Night", "2026-11-28")).toBe("subota, 28. studenoga");
+  });
+
+  it("dijelovi datuma za traku termina", () => {
+    expect(formatDayNumber("2026-11-19")).toBe("19");
+    expect(formatShortMonth("2026-11-19")).toBe("stu");
+    expect(formatDayMonth("2026-11-19")).toBe("četvrtak, 19. studenoga");
+  });
+
   it("formatira datum termina", () => {
     expect(formatEventDate("2026-11-12")).toBe("četvrtak, 12. studenoga 2026.");
   });

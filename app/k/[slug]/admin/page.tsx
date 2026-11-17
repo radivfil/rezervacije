@@ -23,7 +23,7 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export default function AdminPage({ params, searchParams }: PageProps<"/k/[slug]/admin">) {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-4 px-4 pb-8">
+    <main className="flex w-full flex-1 flex-col gap-5 pb-10">
       <Suspense fallback={<PageSkeleton />}>
         <AdminContent params={params} searchParams={searchParams} />
       </Suspense>
@@ -40,7 +40,7 @@ async function AdminContent({ params, searchParams }: { params: Promise<{ slug: 
   // Bez valjane sesije osoblja prikazuje se samo prijava (pravilo 4).
   if (!(await hasStaffSession(slug))) {
     return (
-      <div className="mx-auto w-full max-w-sm pt-6">
+      <div className="mx-auto w-full max-w-sm px-4 pt-8">
         <LoginForm action={loginAction.bind(null, slug)} />
       </div>
     );
@@ -56,15 +56,17 @@ async function AdminContent({ params, searchParams }: { params: Promise<{ slug: 
 
   return (
     <>
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{messages.admin.title}</h1>
+      <div className="flex items-center justify-between gap-3 px-4 pt-2 lg:px-8">
+        <h1 className="display text-[clamp(1.5rem,6vw,2rem)]">{messages.admin.title}</h1>
         <form action={logoutAction.bind(null, slug)}>
-          <button type="submit" className="min-h-11 rounded-xl px-4 text-sm underline opacity-80">
+          <button type="submit" className="btn btn-quiet">
             {messages.admin.logout}
           </button>
         </form>
       </div>
-      <CodeLookupForm slug={slug} />
+      <div className="px-4 lg:px-8">
+        <CodeLookupForm slug={slug} />
+      </div>
       <AdminFloorplan
         venue={plan.venue}
         bookingOpen={plan.bookingOpen}
@@ -77,9 +79,13 @@ async function AdminContent({ params, searchParams }: { params: Promise<{ slug: 
         availability={plan.availability}
         rows={list?.rows ?? []}
       >
-        {list ? <StaffCounts counts={list.counts} /> : <p className="opacity-70">{messages.admin.noEvent}</p>}
+        {list ? <StaffCounts counts={list.counts} /> : <p className="px-4 text-muted lg:px-8">{messages.admin.noEvent}</p>}
       </AdminFloorplan>
-      {list ? <ReservationList slug={slug} rows={list.rows} /> : null}
+      {list ? (
+        <div className="px-4 lg:px-8">
+          <ReservationList slug={slug} rows={list.rows} />
+        </div>
+      ) : null}
     </>
   );
 }

@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { AVAILABILITY_COLORS } from "@/lib/floorplan/colors";
 import type { TableDetails } from "@/lib/floorplan/table-details";
 import { formatEur, formatMultiplier } from "@/lib/format";
 import { interpolate, messages } from "@/lib/i18n";
-import { DetailRows } from "../reservation/DetailRows";
+import { PriceSplit } from "../reservation/PriceSplit";
 import { BottomSheet } from "./BottomSheet";
+import { StatusGlyph } from "./StatusLegend";
 
 interface TableSheetProps {
   details: TableDetails;
@@ -17,8 +17,8 @@ interface TableSheetProps {
 
 const t = messages.tableSheet;
 
-export function StatusDot({ color }: { color: string }) {
-  return <span aria-hidden className="inline-block size-3 rounded-full" style={{ backgroundColor: color }} />;
+export function ZoneMark({ color }: { color: string }) {
+  return <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-[3px]" style={{ backgroundColor: color }} />;
 }
 
 /** Panel stola za gosta: cijena, uvjeti i gumb za rezervaciju. */
@@ -28,63 +28,55 @@ export function TableSheet({ details, bookHref, onClose }: TableSheetProps) {
 
   return (
     <BottomSheet
-      title={
+      eyebrow={
         <>
-          <StatusDot color={details.zoneColor} />
-          {interpolate(t.title, { label: details.label })}
+          <ZoneMark color={details.zoneColor} />
+          {details.zoneName} · {details.floorName}
         </>
       }
+      title={interpolate(t.title, { label: details.label })}
       closeLabel={t.close}
       onClose={onClose}
       focusKey={details.tableId}
     >
-      <DetailRows
-        rows={[
-          { label: t.zone, value: details.zoneName },
-          { label: t.floor, value: details.floorName },
-          { label: t.capacity, value: interpolate(t.capacityValue, { count: details.capacity }) },
-          {
-            label: t.status,
-            value: (
-              <span className="inline-flex items-center gap-2">
-                <StatusDot color={AVAILABILITY_COLORS[details.availability]} />
-                {messages.floorplan.status[details.availability]}
-              </span>
-            ),
-          },
-          ...(price
-            ? [
-                { label: t.minSpend, value: formatEur(price.minSpendCents), emphasis: true },
-                {
-                  label: interpolate(t.deposit, { percent: price.depositPercent }),
-                  value: <span className="text-brand-primary">{formatEur(price.depositCents)}</span>,
-                  emphasis: true,
-                },
-                { label: t.remaining, value: formatEur(price.remainingCents) },
-              ]
-            : []),
-        ]}
-      />
+      <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
+        <span className="inline-flex items-center gap-1.5 font-medium text-brand-text">
+          <StatusGlyph status={details.availability} />
+          {messages.floorplan.status[details.availability]}
+        </span>
+        <span>{interpolate(t.seats, { count: details.capacity })}</span>
+      </p>
+
       {price ? (
-        <p className="py-1 text-xs opacity-60">{interpolate(t.multiplier, { multiplier: formatMultiplier(price.multiplier) })}</p>
+        <div className="mt-4 border-t border-line pt-4">
+          <PriceSplit
+            minSpendCents={price.minSpendCents}
+            depositCents={price.depositCents}
+            remainingCents={price.remainingCents}
+            note={price.multiplier === 1 ? undefined : interpolate(t.multiplier, { multiplier: formatMultiplier(price.multiplier) })}
+          />
+        </div>
       ) : (
-        <p className="py-2 opacity-70">{t.noPrice}</p>
+        <p className="mt-4 text-muted">{t.noPrice}</p>
       )}
 
-      {bookHref ? (
-        <Link
-          href={bookHref}
-          className="mt-3 flex min-h-12 w-full items-center justify-center rounded-xl bg-brand-primary px-4 text-base font-semibold text-brand-on-primary active:scale-[0.99]"
-        >
-          {t.book}
+      {bookHref && price ? (
+        <Link href={bookHref} className="btn btn-primary mt-5 w-full justify-between text-base">
+          {interpolate(t.bookAmount, { amount: formatEur(price.depositCents) })}
+          <span aria-hidden>→</span>
         </Link>
       ) : unavailableMessage ? (
-        <p className="mt-3 rounded-xl bg-brand-background/50 p-3 text-center text-sm opacity-80">{unavailableMessage}</p>
+        <p className="note mt-5">{unavailableMessage}</p>
       ) : null}
 
-      <div className="mt-3 rounded-xl bg-brand-background/50 p-3 text-sm">
-        <h3 className="mb-1 font-semibold">{t.termsTitle}</h3>
-        <ul className="list-disc space-y-1 pl-5 opacity-90">
+      <details className="group mt-3 text-sm">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-muted [&::-webkit-details-marker]:hidden">
+          {t.termsTitle}
+          <span aria-hidden className="transition-transform group-open:rotate-45">
+            +
+          </span>
+        </summary>
+        <ul className="space-y-1.5 pb-2 text-muted">
           {price ? (
             <>
               <li>{interpolate(t.termsDeposit, { percent: price.depositPercent })}</li>
@@ -93,7 +85,7 @@ export function TableSheet({ details, bookHref, onClose }: TableSheetProps) {
           ) : null}
           <li>{interpolate(t.termsCancellation, { hours: details.freeCancellationHours })}</li>
         </ul>
-      </div>
+      </details>
     </BottomSheet>
   );
 }

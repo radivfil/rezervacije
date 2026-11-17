@@ -35,7 +35,7 @@ export default async function VenueLayout({ children, params }: LayoutProps<"/k/
   return (
     <div
       style={themeToCssVars(venue.theme) as CSSProperties}
-      className="flex min-h-dvh flex-1 flex-col bg-brand-background font-brand text-brand-text"
+      className="flex min-h-dvh flex-1 flex-col bg-brand-background font-brand text-brand-text [color-scheme:var(--brand-scheme)]"
     >
       <VenueHeader venue={venue} />
       {children}

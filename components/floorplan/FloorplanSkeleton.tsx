@@ -1,10 +1,10 @@
 import { messages } from "@/lib/i18n";
 
-export function FloorplanSkeleton() {
+export function FloorplanSkeleton({ className = "min-h-[26rem] flex-1" }: { className?: string }) {
   return (
     <div
       role="status"
-      className="flex h-[62dvh] min-h-80 w-full animate-pulse items-center justify-center rounded-xl bg-brand-surface text-sm opacity-70"
+      className={`flex w-full animate-pulse items-center justify-center border-y border-line text-sm text-muted ${className}`}
     >
       {messages.floorplan.loading}
     </div>

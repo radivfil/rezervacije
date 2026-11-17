@@ -9,14 +9,12 @@ interface NoticeProps {
 
 export function Notice({ title, body, backHref, backLabel }: NoticeProps) {
   return (
-    <section className="flex flex-col gap-3 rounded-2xl bg-brand-surface p-5">
-      <h1 className="text-xl font-semibold">{title}</h1>
-      <p className="opacity-80">{body}</p>
-      <Link
-        href={backHref}
-        className="flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-4 font-semibold text-brand-on-primary"
-      >
+    <section className="flex animate-rise flex-col gap-4 border-t border-line-strong pt-8">
+      <h1 className="display text-[clamp(1.75rem,7vw,2.5rem)]">{title}</h1>
+      <p className="max-w-prose text-muted">{body}</p>
+      <Link href={backHref} className="btn btn-primary mt-2 justify-between sm:w-fit sm:min-w-64">
         {backLabel}
+        <span aria-hidden>→</span>
       </Link>
     </section>
   );

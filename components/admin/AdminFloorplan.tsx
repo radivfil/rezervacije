@@ -10,14 +10,14 @@ import { reservationHref } from "@/lib/routes";
 import type { StaffReservationRow } from "@/lib/services/staff";
 import { BottomSheet } from "../floorplan/BottomSheet";
 import { FloorplanBoard } from "../floorplan/FloorplanBoard";
-import { StatusDot } from "../floorplan/TableSheet";
+import { ZoneMark } from "../floorplan/TableSheet";
 import { ManualReservationForm } from "./ManualReservationForm";
 import { StaffReservationDetails } from "./ReservationSummary";
 import { StaffActionButtons } from "./StaffActionButtons";
 import type { ReactNode } from "react";
 
 interface AdminFloorplanProps {
-  venue: Pick<PublicVenue, "slug" | "theme">;
+  venue: Pick<PublicVenue, "slug" | "theme" | "timezone">;
   bookingOpen: boolean;
   events: readonly Event[];
   event: Event | null;
@@ -39,20 +39,25 @@ export function AdminFloorplan({ venue, bookingOpen, rows, children, ...board }:
   return (
     <FloorplanBoard
       {...board}
+      bookingOpen={bookingOpen}
       theme={venue.theme}
+      timezone={venue.timezone}
+      mapClassName="h-[66dvh] min-h-[26rem]"
       renderSheet={(table, close) => {
         const zone = board.zones.find((candidate) => candidate.id === table.zoneId);
         const row = rowByTable.get(table.id);
         const event = board.event;
         return (
           <BottomSheet
-            title={
-              <>
-                {zone ? <StatusDot color={zone.color} /> : null}
-                {interpolate(messages.tableSheet.title, { label: table.label })}
-                <span className="text-sm font-normal opacity-70">{zone?.name}</span>
-              </>
+            eyebrow={
+              zone ? (
+                <>
+                  <ZoneMark color={zone.color} />
+                  {zone.name}
+                </>
+              ) : undefined
             }
+            title={interpolate(messages.tableSheet.title, { label: table.label })}
             closeLabel={messages.tableSheet.close}
             onClose={close}
             focusKey={table.id}
@@ -61,7 +66,7 @@ export function AdminFloorplan({ venue, bookingOpen, rows, children, ...board }:
               <div className="flex flex-col gap-3 pb-2">
                 <StaffReservationDetails reservation={row.reservation} />
                 <StaffActionButtons key={row.reservation.code} slug={venue.slug} code={row.reservation.code} actions={row.actions} />
-                <Link href={reservationHref(venue.slug, row.reservation.code)} className="min-h-11 py-2 text-center text-sm underline">
+                <Link href={reservationHref(venue.slug, row.reservation.code)} className="btn btn-quiet">
                   {messages.admin.open}
                 </Link>
               </div>
@@ -75,7 +80,7 @@ export function AdminFloorplan({ venue, bookingOpen, rows, children, ...board }:
                 depositLabel={formatEur(calculateTablePrice(zone, event).depositCents)}
               />
             ) : (
-              <p className="py-3 text-sm opacity-70">{messages.admin.manual.closed}</p>
+              <p className="note">{messages.admin.manual.closed}</p>
             )}
           </BottomSheet>
         );
