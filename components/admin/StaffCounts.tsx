@@ -10,10 +10,10 @@ export function StaffCounts({ counts }: { counts: EventReservations["counts"] })
     { label: messages.admin.counts.noShow, value: counts.noShow, tone: "text-booked" },
   ];
   return (
-    <dl className="mx-4 mb-4 grid grid-cols-5 divide-x divide-line border-y border-line lg:mx-8">
+    <dl className="mx-4 mb-4 grid grid-cols-[1.45fr_1fr_1fr_1fr_1fr] divide-x divide-line border-y border-line lg:mx-8">
       {items.map((item) => (
         <div key={item.label} className="flex min-w-0 flex-col-reverse px-2 py-3 first:pl-0 sm:px-4">
-          <dt className="mt-1 truncate text-[0.5625rem] leading-tight font-semibold tracking-[0.02em] text-muted uppercase sm:text-[0.6875rem] sm:tracking-[0.06em]">
+          <dt className="mt-1 text-[0.5625rem] leading-tight font-semibold tracking-[0.02em] text-muted uppercase sm:text-[0.6875rem] sm:tracking-[0.06em]">
             {item.label}
           </dt>
           <dd className={`display text-[1.625rem] tabular-nums ${item.value > 0 ? item.tone : "text-muted"}`}>{item.value}</dd>
